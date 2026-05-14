@@ -81,17 +81,6 @@ V3_CSS = """
     line-height: 1.6;
     margin-bottom: 12px;
   }
-  .tag {
-    display: inline-block;
-    font-size: 11px;
-    color: #888888;
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
-    padding: 2px 8px;
-    border-radius: 12px;
-    margin-right: 4px;
-    margin-bottom: 4px;
-  }
   .timeline-thumb {
     cursor: pointer;
     border-radius: 6px;
@@ -217,6 +206,55 @@ def _format_ts(seconds: float) -> str:
     return f"{h:02d}:{m:02d}:{s:02d}"
 
 
+def _clear_edit_session_keys() -> None:
+    for k in list(st.session_state.keys()):
+        if isinstance(k, str) and (
+            k.startswith("edit_summary_") or k.startswith("edit_step_")
+        ):
+            del st.session_state[k]
+
+
+def _ensure_edit_fields(summaries: list) -> None:
+    for i, s in enumerate(summaries):
+        sk = f"edit_summary_{i}"
+        if sk not in st.session_state:
+            raw = s.get("summary", s.get("note", ""))
+            st.session_state[sk] = str(raw) if raw is not None else ""
+        steps = s.get("steps") if isinstance(s.get("steps"), list) else []
+        for j, step in enumerate(steps):
+            tk = f"edit_step_{i}_{j}"
+            if tk not in st.session_state:
+                st.session_state[tk] = str(step)
+
+
+def _build_summary_edited_md(summaries: list) -> str:
+    parts: list[str] = ["# Demo Walkthrough Summary (edited)\n", "\n"]
+    for i, s in enumerate(summaries):
+        label = s.get("label", "")
+        title = s.get("title", "")
+        summary = st.session_state.get(
+            f"edit_summary_{i}", s.get("summary", s.get("note", ""))
+        )
+        steps_src = s.get("steps") if isinstance(s.get("steps"), list) else []
+        parts.append(f"## [{label}] {title}\n\n")
+        parts.append(f"**Summary:** {summary}\n\n")
+        parts.append("**Steps:**\n")
+        if not steps_src:
+            parts.append("_No steps._\n\n")
+        else:
+            for j in range(len(steps_src)):
+                line = st.session_state.get(
+                    f"edit_step_{i}_{j}", str(steps_src[j])
+                )
+                parts.append(f"{j + 1}. {line}\n")
+            parts.append("\n")
+        wim = s.get("why_it_matters")
+        if wim:
+            parts.append(f"**Why it matters:** {wim}\n\n")
+        parts.append("---\n\n")
+    return "".join(parts)
+
+
 def _probe_upload_duration(uploaded_file) -> float | None:
     if uploaded_file is None:
         st.session_state["probe_signature"] = None
@@ -252,9 +290,6 @@ _startup_checks()
 ollama_model = st.session_state.get("ollama_model", "llava")
 
 st.title("Demo Walkthrough Summarizer")
-st.caption(
-    "Local Whisper + scene detection + Ollama — **consultant-style notes**, dark UI, parallel summaries."
-)
 
 with st.sidebar:
     st.markdown("### 🎬 Demo Summarizer")
@@ -392,6 +427,7 @@ def _run_analysis(
             st.session_state["scenes"] = scenes
             st.session_state["aligned"] = aligned
             st.session_state["summaries"] = summaries
+            _clear_edit_session_keys()
             st.session_state["video_filename"] = filename
             st.session_state["video_duration"] = video_duration_sec
             st.session_state["analysis_complete"] = True
@@ -509,7 +545,8 @@ with tab_transcript:
     )
 
 with tab_summaries:
-    st.subheader("Consultant notes by segment")
+    st.subheader("Summaries by segment")
+    _ensure_edit_fields(summaries)
     selected = st.session_state.get("selected_segment")
     for i, s in enumerate(summaries):
         is_sel = selected is not None and i == int(selected)
@@ -523,52 +560,51 @@ with tab_summaries:
         with col2:
             label_e = html.escape(str(s.get("label", "")))
             title_e = html.escape(str(s.get("title", "")))
-            note_e = html.escape(str(s.get("note", "")))
-            tags = "".join(
-                f'<span class="tag">{html.escape(str(c))}</span>'
-                for c in (s.get("key_concepts") or [])
-            )
-            wim = s.get("why_it_matters")
-            wim_html = ""
-            if wim:
-                wim_html = (
-                    f'<div class="segment-note"><b>Why it matters:</b> '
-                    f"{html.escape(str(wim))}</div>"
-                )
             st.markdown(
-                f"""
-<div class="segment-card">
-  <div class="timestamp-badge">{label_e}</div>
-  <div class="segment-title">{title_e}</div>
-  <div class="segment-note">{note_e}</div>
-  {wim_html}
-  {tags}
-</div>
-                """,
+                f'<div class="segment-card">'
+                f'<div class="timestamp-badge">{label_e}</div>'
+                f'<div class="segment-title">{title_e}</div></div>',
                 unsafe_allow_html=True,
             )
-            if s.get("notable_details"):
-                with st.expander("Notable details"):
-                    for d in s["notable_details"]:
-                        st.markdown(f"— {d}")
+            st.text_area(
+                "Summary",
+                key=f"edit_summary_{i}",
+                height=90,
+                label_visibility="collapsed",
+            )
+            st.markdown("**Steps**")
+            steps_list = s.get("steps") if isinstance(s.get("steps"), list) else []
+            for j in range(len(steps_list)):
+                st.text_area(
+                    f"Step {j + 1}",
+                    key=f"edit_step_{i}_{j}",
+                    height=68,
+                    label_visibility="collapsed",
+                )
+            wim = s.get("why_it_matters")
+            if wim:
+                st.markdown(
+                    f'<div class="segment-note"><b>Why it matters:</b> '
+                    f"{html.escape(str(wim))}</div>",
+                    unsafe_allow_html=True,
+                )
 
 with tab_export:
     st.subheader("Downloads")
     sm_path = exporter.SUMMARY_MD
-    nd_path = exporter.NOTABLE_DETAILS_MD
+    edited_md = _build_summary_edited_md(summaries)
+    st.download_button(
+        "📝 Download summary with my edits",
+        data=edited_md.encode("utf-8"),
+        file_name="summary_edited.md",
+        mime="text/markdown",
+        use_container_width=True,
+    )
     if sm_path.is_file():
         st.download_button(
             "Download summary.md",
             data=sm_path.read_bytes(),
             file_name="summary.md",
-            mime="text/markdown",
-            use_container_width=True,
-        )
-    if nd_path.is_file():
-        st.download_button(
-            "Download notable_details.md",
-            data=nd_path.read_bytes(),
-            file_name="notable_details.md",
             mime="text/markdown",
             use_container_width=True,
         )

@@ -4,301 +4,222 @@
     "label": "00:00:02",
     "screenshot_path": "outputs/screenshots/00_00_02.png",
     "transcript_window": "and different roles. Yeah. Let me just check if we can do it. So I think we did not discuss the lifecycle calendar that much. So if you so for the so we discuss the allocation of the management, so for the lifecycle calendar, so you can create different lifecycle per specific criteria that you want. Let's say for specific subclass and let's say region, you can have a lifecycle of just two per cycle of phase three five so you can have different lifecycle phase. Now this lifecycle phase that you can see from here, these are all loaded.",
-    "title": "Configured lifecycle calendar with custom criteria",
-    "note": "Consultant is checking if it's possible to configure a lifecycle calendar. They mention creating different lifecycles per specific subclass and region, with options for two phases per cycle. The consultant notes that these lifecycles are already loaded.",
-    "key_concepts": [
-      "lifecycle calendar",
-      "custom criteria"
-    ],
-    "notable_details": [
-      "subclass",
-      "region",
-      "two phases per cycle"
-    ],
-    "why_it_matters": "This moment matters because it highlights the need to discuss lifecycle calendar configuration in more detail."
+    "title": "Lifecycles and Allocation Setup",
+    "summary": "The consultant discussed lifecycle calendars with the client, explaining that different lifecycles can be created based on specific criteria. No screenshot was available for this moment.",
+    "steps": [
+      "Checked if lifecycle calendar discussion was possible",
+      "Explained how to create different lifecycles per subclass and region"
+    ]
   },
   {
     "timestamp": 30.0,
     "label": "00:00:30",
     "screenshot_path": "outputs/screenshots/00_00_30.png",
     "transcript_window": "and different roles. Yeah. Let me just check if we can do it. So I think we did not discuss the lifecycle calendar that much. So if you so for the so we discuss the allocation of the management, so for the lifecycle calendar, so you can create different lifecycle per specific criteria that you want. Let's say for specific subclass and let's say region, you can have a lifecycle of just two per cycle of phase three five so you can have different lifecycle phase. Now this lifecycle phase that you can see from here, these are all loaded. So these are preloaded. You can load it through this table. So there's a table. There's a staging table that will hold all of this lifecycle phases. So there is no UI at the moment where you can set up all these lifecycle phases. These are just loaded through the staging table. But the idea is",
-    "title": "Configured lifecycle phases for specific criteria",
-    "note": "The consultant discussed configuring lifecycle phases based on subclass and region. They mentioned that different lifecycle phases can be created per cycle of phase three to five. The current setup loads preloaded lifecycle phases from a staging table, but there's no UI to set up these phases.",
-    "key_concepts": [
-      "lifecycle calendar",
-      "allocation of management",
-      "staging table"
+    "title": "Lifecycle Calendar Setup",
+    "summary": "The consultant discussed the lifecycle calendar feature with the client. They explained that different lifecycle phases can be created based on specific criteria such as subclass and region. No screenshot was available for this moment.",
+    "steps": [
+      "Checked if lifecycle calendar setup could be demonstrated",
+      "Explained how to create different lifecycle phases per specific criteria"
     ],
-    "notable_details": [
-      "subclass and region as specific criteria",
-      "cycle of phase three to five"
-    ],
-    "why_it_matters": "This moment matters because it highlights the current limitations in configuring lifecycle phases, which may impact future development or implementation."
+    "why_it_matters": "This moment matters because it sets the stage for understanding how lifecycle phases are managed in the software."
   },
   {
     "timestamp": 60.0,
     "label": "00:01:00",
     "screenshot_path": "outputs/screenshots/00_01_00.png",
     "transcript_window": "per specific criteria that you want. Let's say for specific subclass and let's say region, you can have a lifecycle of just two per cycle of phase three five so you can have different lifecycle phase. Now this lifecycle phase that you can see from here, these are all loaded. So these are preloaded. You can load it through this table. So there's a table. There's a staging table that will hold all of this lifecycle phases. So there is no UI at the moment where you can set up all these lifecycle phases. These are just loaded through the staging table. But the idea is you can have different lifecycle space setup for a specific criteria. Like in this example, we have four different lifecycle phases. If you want to look at the data or whatever the setup that we have, so you can go to the manage workbook and in the innovation worth bench,",
-    "title": "Configured lifecycle phases for specific criteria",
-    "note": "Loaded pre-configured lifecycle phases through a staging table. Four different phases are set up for a specific example. The idea is to have different lifecycle spaces setup for various criteria.",
-    "key_concepts": [
-      "lifecycle phase",
-      "staging table"
+    "title": "Lifecycle Phase Setup and Management",
+    "summary": "The consultant discussed setting up lifecycle phases for specific criteria, such as subclass and region. The current setup has four different lifecycle phases preloaded in a staging table. No screenshot was available.",
+    "steps": [
+      "Explained that lifecycle phases can be set up based on specific criteria",
+      "Showed the preloaded lifecycle phases in a staging table",
+      "Indicated that these phases can be managed through the 'Manage Workbook' feature"
     ],
-    "notable_details": [
-      "four different lifecycle phases",
-      "specific subclass and region"
-    ],
-    "why_it_matters": "This moment sets the stage for configuring lifecycle phases based on specific criteria, which is a key aspect of the overall system."
+    "why_it_matters": "This moment matters because it sets the stage for understanding how to manage and configure lifecycle phases."
   },
   {
     "timestamp": 69.0,
     "label": "00:01:09",
     "screenshot_path": "outputs/screenshots/00_01_09.png",
     "transcript_window": "region, you can have a lifecycle of just two per cycle of phase three five so you can have different lifecycle phase. Now this lifecycle phase that you can see from here, these are all loaded. So these are preloaded. You can load it through this table. So there's a table. There's a staging table that will hold all of this lifecycle phases. So there is no UI at the moment where you can set up all these lifecycle phases. These are just loaded through the staging table. But the idea is you can have different lifecycle space setup for a specific criteria. Like in this example, we have four different lifecycle phases. If you want to look at the data or whatever the setup that we have, so you can go to the manage workbook and in the innovation worth bench, manage innovation worth bench. So you can do a query from here, the manage worth bench.",
-    "title": "Configured lifecycle phases for phase three five",
-    "note": "Loaded four different lifecycle phases through a staging table. No UI available to set up these phases. Can be queried in the manage workbook.",
-    "key_concepts": [
-      "lifecycle phases",
-      "staging table"
+    "title": "Lifecycle Phase Setup and Data Management",
+    "summary": "The consultant discussed lifecycle phase setup and data management capabilities. The system allows for multiple lifecycle phases to be set up and managed through a staging table. No screenshot was available.",
+    "steps": [
+      "Loaded preconfigured lifecycle phases into the system.",
+      "Navigated to the manage workbook in the innovation worth bench."
     ],
-    "notable_details": [
-      "four different lifecycle phases",
-      "phase three five"
-    ],
-    "why_it_matters": "This configuration will impact data access and management for phase three five."
+    "why_it_matters": "This moment matters because it highlights the system's ability to handle multiple lifecycle phases and provide data management capabilities."
   },
   {
     "timestamp": 90.0,
     "label": "00:01:30",
     "screenshot_path": "outputs/screenshots/00_01_30.png",
     "transcript_window": "table that will hold all of this lifecycle phases. So there is no UI at the moment where you can set up all these lifecycle phases. These are just loaded through the staging table. But the idea is you can have different lifecycle space setup for a specific criteria. Like in this example, we have four different lifecycle phases. If you want to look at the data or whatever the setup that we have, so you can go to the manage workbook and in the innovation worth bench, manage innovation worth bench. So you can do a query from here, the manage worth bench. So from here, let's say you just want to see what lifecycle phase has been loaded in this environment.",
-    "title": "Configured lifecycle phases for staging table",
-    "note": "The consultant discussed setting up lifecycle phases through a staging table. Four different lifecycle phases were mentioned as an example. The user can query these phases in the manage workbook.",
-    "key_concepts": [
-      "lifecycle phases",
-      "staging table"
+    "title": "Lifecycle Phases Setup and Data Management",
+    "summary": "The consultant discussed setting up lifecycle phases through a staging table. No UI is currently available for this setup. The user can manage workbooks to query data.",
+    "steps": [
+      "Loaded four different lifecycle phases into the staging table.",
+      "Navigated to the 'Manage Workbook' section in the 'Innovation Worth Bench'.",
+      "Decided to view which lifecycle phase has been loaded in the environment."
     ],
-    "notable_details": [
-      "four lifecycle phases",
-      "manage workbook"
-    ],
-    "why_it_matters": "This moment matters because it sets up the foundation for querying and managing lifecycle phases in the system."
+    "why_it_matters": "This moment matters as it sets up the foundation for data management and querying within the application."
   },
   {
     "timestamp": 121.0,
     "label": "00:02:01",
     "screenshot_path": "outputs/screenshots/00_02_01.png",
     "transcript_window": "we have four different lifecycle phases. If you want to look at the data or whatever the setup that we have, so you can go to the manage workbook and in the innovation worth bench, manage innovation worth bench. So you can do a query from here, the manage worth bench. So from here, let's say you just want to see what lifecycle phase has been loaded in this environment. There's nothing maybe the team loaded directly to the not understanding table, but directly on the internal table. But this is the table that you will use if you're going to load your lifecycle",
-    "title": "Configured lifecycle phase data access",
-    "note": "Consultant showed how to query lifecycle phase data from the manage workbook in the innovation worth bench. They demonstrated accessing the internal table for loading lifecycle data. This step is crucial for understanding how to load and view lifecycle phase information.",
-    "key_concepts": [
-      "lifecycle phases",
-      "manage workbook",
-      "innovation worth bench"
+    "title": "Navigating Lifecycle Phases and Data Management",
+    "summary": "The consultant discussed navigating lifecycle phases and data management within the software. The conversation touched on querying data using the 'manage innovation worth bench' feature. No screenshot was available for this moment.",
+    "steps": [
+      "Navigated to the 'Manage Workbook' section",
+      "Selected the 'Innovation Worth Bench' option"
     ],
-    "notable_details": [
-      "internal table",
-      "directly loaded to not understanding table"
-    ],
-    "why_it_matters": "This moment matters because it sets up the process for accessing and loading lifecycle phase data, a critical component of the overall workflow."
+    "why_it_matters": "This moment is crucial as it sets up the foundation for understanding lifecycle phases and data management within the software."
   },
   {
     "timestamp": 193.0,
     "label": "00:03:13",
     "screenshot_path": "outputs/screenshots/00_03_13.png",
     "transcript_window": "phases. And the details what file we need to use is in the RAP interface document, right? Yes, I will leave it to you. So you can see we have here the call and learn name. And it's those are your kind of names. Starting in the phase type. So let's say for the first phase, it will be your initial location, second is this co-reading. So you can have up to six lifecycle phases from here and then assertment, duration. So you can define all of here from here. You can also update this table directly from innovation worth bench. And the the anchor is for each like what you use to have in there, like how to define when phase will start, is it like based on the starting and end date?",
-    "title": "Configured lifecycle phases for project",
-    "note": "Consultant was shown how to configure lifecycle phases, including phase types and start/end dates. The RAP interface document contains necessary details. Up to six phases can be defined.",
-    "key_concepts": [
-      "lifecycle phases",
-      "phase types",
-      "RAP interface document"
+    "title": "Defining Lifecycle Phases and Attributes",
+    "summary": "The consultant discussed defining lifecycle phases and attributes with the client. The details of which file to use are found in the RAP interface document. No screenshot was available.",
+    "steps": [
+      "Navigated to the RAP interface document for reference on file usage.",
+      "Explained how to define lifecycle phases, including up to six phases: initial location, co-reading, and others."
     ],
-    "notable_details": [
-      "six lifecycle phases",
-      "starting and end date"
-    ],
-    "why_it_matters": "This configuration is crucial for project management and tracking."
+    "why_it_matters": "This moment matters because it clarifies how to set up lifecycle phases in the software."
   },
   {
     "timestamp": 238.0,
     "label": "00:03:58",
     "screenshot_path": "outputs/screenshots/00_03_58.png",
     "transcript_window": "phase, it will be your initial location, second is this co-reading. So you can have up to six lifecycle phases from here and then assertment, duration. So you can define all of here from here. You can also update this table directly from innovation worth bench. And the the anchor is for each like what you use to have in there, like how to define when phase will start, is it like based on the starting and end date? Yeah, so it is only based on the assertment start date. And problem. Yeah, so you can use either from start, how many days from start or how many days before and",
-    "title": "Configured lifecycle phase settings",
-    "note": "Defined up to six lifecycle phases with assertment and duration. Anchor set to start date based on assertment start date. Can use days from start or before end date for phase start.",
-    "key_concepts": [
-      "lifecycle phases",
-      "assertment",
-      "anchor"
+    "title": "Defining Lifecycle Phases and Assertions",
+    "summary": "The consultant discussed defining lifecycle phases and assertions with the user. The conversation covered how to set up phases, including start dates and durations. No screenshot was available for this moment.",
+    "steps": [
+      "Defined what a phase is and its relationship to co-reading",
+      "Explained that up to six lifecycle phases can be defined from this location",
+      "Mentioned the ability to update the table directly from Innovation Worth Bench"
     ],
-    "notable_details": [
-      "up to six phases",
-      "start date based on assertment start date",
-      "days from start or before end date"
-    ],
-    "why_it_matters": "This configuration sets the foundation for tracking phase progress and duration."
+    "why_it_matters": "This moment matters because it sets the stage for understanding how to structure and manage project timelines."
   },
   {
     "timestamp": 290.0,
     "label": "00:04:50",
     "screenshot_path": "outputs/screenshots/00_04_50.png",
     "transcript_window": "Yeah, so you can use either from start, how many days from start or how many days before and so you can define up to six lifecycle phases. And then so this example here for replenishment. So each rule category, you can define if it will use lifecycle phase for its rules. Just like for example here, we can use a rule parameter for custom date using lifecycle phase. So you can define this in the system configuration. So the left cycle calendar setup here is not mandatory and like large. And it is not sure, and I don't not necessarily have a lifecycle active to be replenished.",
-    "title": "Configured lifecycle phases for replenishment rules",
-    "note": "Defined up to six lifecycle phases and assigned them to specific rule categories. Mentioned that a left cycle calendar setup is not mandatory but can be used in system configuration.",
-    "key_concepts": [
-      "lifecycle phases",
-      "replenishment rules"
+    "title": "Configuring Lifecycle Phases for Rules",
+    "summary": "The consultant discussed configuring lifecycle phases for rules, specifically for replenishment. The system configuration allows defining up to six lifecycle phases and associating them with rule categories. No screenshot was available.",
+    "steps": [
+      "Defined up to six lifecycle phases in the system configuration.",
+      "Decided that the left cycle calendar setup is not mandatory.",
+      "Explained that a lifecycle phase can be used for custom date rules."
     ],
-    "notable_details": [
-      "up to six lifecycle phases",
-      "rule categories",
-      "left cycle calendar setup"
-    ],
-    "why_it_matters": "This moment matters because it sets up the framework for configuring replenishment rules, which is a critical aspect of inventory management."
+    "why_it_matters": "This moment matters because it shows how to configure lifecycle phases, which are crucial for rule-based decision-making in the system."
   },
   {
     "timestamp": 308.0,
     "label": "00:05:08",
     "screenshot_path": "outputs/screenshots/00_05_08.png",
     "transcript_window": "so you can define up to six lifecycle phases. And then so this example here for replenishment. So each rule category, you can define if it will use lifecycle phase for its rules. Just like for example here, we can use a rule parameter for custom date using lifecycle phase. So you can define this in the system configuration. So the left cycle calendar setup here is not mandatory and like large. And it is not sure, and I don't not necessarily have a lifecycle active to be replenished. Define start and end date when you want to replenish it. Yes, so this one, it just depends on your if it is eligible or if it is asserted. So there is",
-    "title": "Configured lifecycle phases for replenishment rules",
-    "note": "The consultant defined up to six lifecycle phases and explained how they can be used for rule categories. They demonstrated configuring a system setting to use lifecycle phase for custom dates in the example of replenishment. The left cycle calendar setup is not mandatory.",
-    "key_concepts": [
-      "lifecycle phases",
-      "replenishment rules"
+    "title": "Defining Lifecycle Phases for Replenishment Rules",
+    "summary": "The consultant is explaining how to define up to six lifecycle phases and assign them to rule categories. The system configuration allows defining start and end dates for replenishing items. No screenshot was available.",
+    "steps": [
+      "Defined up to six lifecycle phases in the system configuration.",
+      "Assigned a lifecycle phase to the 'replenishment' rule category.",
+      "Configured custom date using lifecycle phase as a rule parameter."
     ],
-    "notable_details": [
-      "up to six lifecycle phases",
-      "custom date using lifecycle phase",
-      "left cycle calendar setup"
-    ],
-    "why_it_matters": "This configuration will impact how replenishment rules are applied in the system."
+    "why_it_matters": "This step is crucial for setting up replenishment rules and ensuring accurate inventory management."
   },
   {
     "timestamp": 321.0,
     "label": "00:05:21",
     "screenshot_path": "outputs/screenshots/00_05_21.png",
     "transcript_window": "So each rule category, you can define if it will use lifecycle phase for its rules. Just like for example here, we can use a rule parameter for custom date using lifecycle phase. So you can define this in the system configuration. So the left cycle calendar setup here is not mandatory and like large. And it is not sure, and I don't not necessarily have a lifecycle active to be replenished. Define start and end date when you want to replenish it. Yes, so this one, it just depends on your if it is eligible or if it is asserted. So there is unlike large where you have where you need the specific range or item location needs to be asserted first. And also lifecycle active. So here there is no lifecycle active concept. It is just what is the",
-    "title": "Configured rule categories with lifecycle phase",
-    "note": "The consultant discussed configuring rule categories to use lifecycle phase. They mentioned that the left cycle calendar setup is not mandatory and can be defined in system configuration. The speaker highlighted differences between rule categories, specifically 'unlike large' where a specific range or item location needs to be asserted first.",
-    "key_concepts": [
-      "rule category",
-      "lifecycle phase"
-    ],
-    "notable_details": [
-      "left cycle calendar setup",
-      "unlike large"
-    ],
-    "why_it_matters": "This moment is significant because it clarifies the configuration options for rule categories, which will impact how rules are applied in the system."
+    "title": "Rule Category Configuration",
+    "summary": "The consultant discussed configuring rule categories to use lifecycle phase for rules. No screenshot was available.",
+    "steps": [
+      "Defined a rule category to use lifecycle phase for its rules",
+      "Explained the option to use a custom date with lifecycle phase in system configuration"
+    ]
   },
   {
     "timestamp": 333.0,
     "label": "00:05:33",
     "screenshot_path": "outputs/screenshots/00_05_33.png",
     "transcript_window": "So each rule category, you can define if it will use lifecycle phase for its rules. Just like for example here, we can use a rule parameter for custom date using lifecycle phase. So you can define this in the system configuration. So the left cycle calendar setup here is not mandatory and like large. And it is not sure, and I don't not necessarily have a lifecycle active to be replenished. Define start and end date when you want to replenish it. Yes, so this one, it just depends on your if it is eligible or if it is asserted. So there is unlike large where you have where you need the specific range or item location needs to be asserted first. And also lifecycle active. So here there is no lifecycle active concept. It is just what is the what is the range, what is the asserted item location at the moment. So the lifecycle there is optional.",
-    "title": "Configured lifecycle phase for rule categories",
-    "note": "The consultant discussed configuring rule categories to use lifecycle phase. They mentioned that the left cycle calendar setup is not mandatory and can be defined in system configuration. The lifecycle active concept is optional.",
-    "key_concepts": [
-      "lifecycle phase",
-      "rule categories"
-    ],
-    "notable_details": [
-      "left cycle calendar setup",
-      "system configuration"
-    ],
-    "why_it_matters": "This moment matters because it clarifies the relationship between rule categories and lifecycle phases."
+    "title": "Rule Category Configuration Options",
+    "summary": "The consultant discussed configuring rule categories to use lifecycle phase for rules. No screenshot was available.",
+    "steps": [
+      "Defined whether each rule category uses lifecycle phase for its rules.",
+      "Explained the optional nature of lifecycle active in this configuration."
+    ]
   },
   {
     "timestamp": 346.0,
     "label": "00:05:46",
     "screenshot_path": "outputs/screenshots/00_05_46.png",
     "transcript_window": "for example here, we can use a rule parameter for custom date using lifecycle phase. So you can define this in the system configuration. So the left cycle calendar setup here is not mandatory and like large. And it is not sure, and I don't not necessarily have a lifecycle active to be replenished. Define start and end date when you want to replenish it. Yes, so this one, it just depends on your if it is eligible or if it is asserted. So there is unlike large where you have where you need the specific range or item location needs to be asserted first. And also lifecycle active. So here there is no lifecycle active concept. It is just what is the what is the range, what is the asserted item location at the moment. So the lifecycle there is optional. Actually, when you when you receive the provision environment, this will be by default, this will be the activated need to need to enable it in the system configuration.",
-    "title": "Configured custom date using lifecycle phase",
-    "note": "Defined a rule parameter for custom date using lifecycle phase. Configured system configuration to enable custom date replenishment. Lifecycle active is optional and can be enabled in system configuration.",
-    "key_concepts": [
-      "rule parameter",
-      "lifecycle phase",
-      "system configuration"
+    "title": "Custom Date Setup for Lifecycle Phase",
+    "summary": "The consultant discussed custom date setup using lifecycle phase and system configuration. No screenshot was available. The left cycle calendar setup is not mandatory.",
+    "steps": [
+      "Defined a rule parameter for custom date using lifecycle phase in system configuration.",
+      "Explained that the left cycle calendar setup is optional and can be enabled in system configuration."
     ],
-    "notable_details": [
-      "custom date replenishment",
-      "enable lifecycle active"
-    ],
-    "why_it_matters": "This decision affects how custom dates are handled in the system."
+    "why_it_matters": "This moment matters because it explains how to set up custom dates for lifecycle phases."
   },
   {
     "timestamp": 412.0,
     "label": "00:06:52",
     "screenshot_path": "outputs/screenshots/00_06_52.png",
     "transcript_window": "Actually, when you when you receive the provision environment, this will be by default, this will be the activated need to need to enable it in the system configuration. So you need to enable the custom dates. If not, it will be just like let's say for example, this one in this plane, it is not active enabled. So you will not see the the custom date or the left cycle active. So you need to enable it first. Now once you define all the rules, so the workflow is you will define all the possible rules first in the room management. Once you know the rules, so for example here, I have I have one auto approval defined there are three defined cross-dalking there eight different initial location rules and there are 19 or 10. So these are just possible rules at the moment. But at this point, we don't know if this rule is being",
-    "title": "Configured custom dates and rule definitions",
-    "note": "The consultant needs to enable custom dates in system configuration. The provision environment has a default setting that must be overridden. Rules for auto approval, cross-dalking, initial location, and others are defined but not yet applied.",
-    "key_concepts": [
-      "custom dates",
-      "system configuration"
+    "title": "Provision Environment Setup",
+    "summary": "The consultant explained that custom dates and left cycle are not active by default. The user needs to enable them in system configuration first. No screenshot was available for this moment.",
+    "steps": [
+      "Received provision environment with default settings",
+      "Enabled custom dates in system configuration"
     ],
-    "notable_details": [
-      "auto approval rule",
-      "cross-dalking rules",
-      "initial location rules"
-    ],
-    "why_it_matters": "This step is crucial for enabling custom date functionality and setting up the foundation for workflow automation."
+    "why_it_matters": "This step is crucial for setting up the correct workflow and rules in the system."
   },
   {
     "timestamp": 423.0,
     "label": "00:07:03",
     "screenshot_path": "outputs/screenshots/00_07_03.png",
     "transcript_window": "by default, this will be the activated need to need to enable it in the system configuration. So you need to enable the custom dates. If not, it will be just like let's say for example, this one in this plane, it is not active enabled. So you will not see the the custom date or the left cycle active. So you need to enable it first. Now once you define all the rules, so the workflow is you will define all the possible rules first in the room management. Once you know the rules, so for example here, I have I have one auto approval defined there are three defined cross-dalking there eight different initial location rules and there are 19 or 10. So these are just possible rules at the moment. But at this point, we don't know if this rule is being in the batch or in what if or different strategies, custom strategies to be used for what if",
-    "title": "Custom dates not enabled by default",
-    "note": "The consultant needs to enable custom dates in system configuration. If not, users won't see custom date or left cycle active. This is a prerequisite for defining rules.",
-    "key_concepts": [
-      "custom dates",
-      "system configuration"
+    "title": "System Configuration - Custom Dates Activation",
+    "summary": "The consultant explained that custom dates are not enabled by default and need to be activated in system configuration. This is necessary for certain features to work properly. No screenshot was available.",
+    "steps": [
+      "Navigated to system configuration settings",
+      "Enabled custom dates feature"
     ],
-    "notable_details": [
-      "default settings",
-      "19/10 possible rules mentioned"
-    ],
-    "why_it_matters": "Enabling custom dates is necessary to proceed with rule definition."
+    "why_it_matters": "This step ensures that the software can utilize custom dates, which are crucial for specific workflows."
   },
   {
     "timestamp": 431.0,
     "label": "00:07:11",
     "screenshot_path": "outputs/screenshots/00_07_11.png",
     "transcript_window": "So you need to enable the custom dates. If not, it will be just like let's say for example, this one in this plane, it is not active enabled. So you will not see the the custom date or the left cycle active. So you need to enable it first. Now once you define all the rules, so the workflow is you will define all the possible rules first in the room management. Once you know the rules, so for example here, I have I have one auto approval defined there are three defined cross-dalking there eight different initial location rules and there are 19 or 10. So these are just possible rules at the moment. But at this point, we don't know if this rule is being in the batch or in what if or different strategies, custom strategies to be used for what if are. So the use, yep. So for the lifecycle phases, say we create a lifecycle phase.",
-    "title": "Enabled custom dates for room management",
-    "note": "Custom dates need to be enabled for room management. If not, it will affect visibility of custom date and left cycle. The consultant is explaining the workflow for defining rules in room management.",
-    "key_concepts": [
-      "custom dates",
-      "room management"
+    "title": "Enabling Custom Dates and Defining Rules",
+    "summary": "The consultant explained that custom dates need to be enabled for certain features to work. They demonstrated how to define rules in room management, including auto approval, cross-dalking, initial location rules, and custom strategies.",
+    "steps": [
+      "Enabled custom dates on the screen",
+      "Defined multiple rules in room management, including auto approval, cross-dalking, and initial location rules"
     ],
-    "notable_details": [
-      "auto approval",
-      "cross-dalking",
-      "initial location rules",
-      "lifecycle phases"
-    ],
-    "why_it_matters": "This moment matters because it sets up the foundation for defining rules in room management, which is a critical step in the workflow."
+    "why_it_matters": "This step is crucial for understanding how to configure the software's workflow."
   },
   {
     "timestamp": 530.0,
     "label": "00:08:50",
     "screenshot_path": "outputs/screenshots/00_08_50.png",
     "transcript_window": "So you can create different rules for that one. So I thought like there were limitations to what comes in as an attribute. So I was wondering if a lifecycle would work as an attribute. Yeah, it is not an attribute but it is a different rule parameter. So it is a rule parameter not an attribute. So from here, let's say I want to create a specific, let's say my time, let's say for initial allocation, initial allocation because we are having a separate initial allocation. Right. Let's say for maturity, I will use time supply.",
-    "title": "Configured rule parameter for lifecycle",
-    "note": "Discussed limitations of attribute-based rules and decided to use a different rule parameter. Identified 'time' as a suitable value for initial allocation and maturity.",
-    "key_concepts": [
-      "rule parameter",
-      "lifecycle"
-    ],
-    "notable_details": [
-      "initial allocation",
-      "maturity",
-      "time supply"
-    ],
-    "why_it_matters": "This decision impacts the configuration of specific rules for product lifecycle management."
+    "title": "Rule Parameters and Attribute Discussion",
+    "summary": "The consultant discussed rule parameters vs attributes with the user. No screenshot was available for this moment.",
+    "steps": [
+      "Discussed limitations of attribute options in software demo",
+      "Explained that lifecycle is a different rule parameter, not an attribute",
+      "Decided to use 'time' as a rule parameter for initial allocation and maturity"
+    ]
   }
 ]

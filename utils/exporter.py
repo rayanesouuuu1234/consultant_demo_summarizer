@@ -1,4 +1,4 @@
-"""Markdown exports and ZIP packaging (v3)."""
+"""Markdown exports and ZIP packaging."""
 
 from __future__ import annotations
 
@@ -8,14 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 SUMMARY_MD = Path("outputs/summaries/summary.md")
-NOTABLE_DETAILS_MD = Path("outputs/summaries/notable_details.md")
 OPEN_QUESTIONS_MD = Path("outputs/summaries/open_questions.md")
-
-
-def _fmt_list(items: list | None, sep: str = " · ") -> str:
-    if not items:
-        return ""
-    return sep.join(str(x) for x in items if x)
 
 
 def _md_cell(val: str) -> str:
@@ -55,41 +48,25 @@ def write_markdown_exports(
         label = s.get("label", "")
         lines.append(f"## [{label}] {title}")
         lines.append("")
-        lines.append(f"**Note:** {s.get('note', '')}")
+        summary = s.get("summary", s.get("note", ""))
+        lines.append(f"**Summary:** {summary}")
+        lines.append("")
+        lines.append("**Steps:**")
+        steps = s.get("steps") if isinstance(s.get("steps"), list) else []
+        if steps:
+            for k, step in enumerate(steps, start=1):
+                lines.append(f"{k}. {step}")
+        else:
+            lines.append("_No steps listed._")
         lines.append("")
         wim = s.get("why_it_matters")
         if wim:
             lines.append(f"**Why it matters:** {wim}")
             lines.append("")
-        kc = s.get("key_concepts") or []
-        lines.append(f"**Key concepts:** {_fmt_list(kc)}")
-        lines.append("")
-        nd = s.get("notable_details") or []
-        lines.append("**Notable details:**")
-        for d in nd:
-            lines.append(f"- {d}")
-        if not nd:
-            lines.append("- _None listed_")
-        lines.append("")
         lines.append("---")
         lines.append("")
 
     SUMMARY_MD.write_text("\n".join(lines), encoding="utf-8")
-
-    nd_lines = [
-        "# Notable Details & Decisions",
-        "",
-        "Extracted across all segments — based only on transcript and screenshots.",
-        "",
-    ]
-    for s in summaries:
-        label = s.get("label", "")
-        for detail in s.get("notable_details") or []:
-            nd_lines.append(f"- [{label}] {detail}")
-    if len(nd_lines) <= 4:
-        nd_lines.append("- _No notable details extracted._")
-    nd_lines.append("")
-    NOTABLE_DETAILS_MD.write_text("\n".join(nd_lines), encoding="utf-8")
 
     oq_lines = [
         "# Open Questions Log",

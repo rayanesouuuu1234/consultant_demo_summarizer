@@ -1,4 +1,4 @@
-"""Ollama-backed summarization — v3 consultant notes, parallel workers."""
+"""Ollama-backed summarization — summary + numbered steps, parallel workers."""
 
 from __future__ import annotations
 
@@ -13,12 +13,14 @@ import requests
 OLLAMA_BASE = "http://localhost:11434"
 SUMMARY_JSON = Path("outputs/summaries/summary.json")
 
-_JSON_SCHEMA_VISION = """{
-  "title": "Action-oriented title — what was done here (5-8 words, e.g. 'Configured reorder levels for seasonal SKUs')",
-  "note": "2-4 sentences. Direct consultant briefing. What happened, what was shown, what matters. No passive openers.",
-  "key_concepts": ["only terms explicitly visible or spoken — empty array if none"],
-  "notable_details": ["specific values, rules, decisions, names mentioned — empty array if none"],
-  "why_it_matters": "One sentence on why this moment is significant in the overall flow — only if clearly inferable from the inputs, otherwise omit this field"
+_JSON_SCHEMA = """{
+  "title": "Short label for the scene (5-10 words, e.g. 'Filing Setup — Entity Selection')",
+  "summary": "2-3 sentences describing what was on screen and what was being discussed at this moment",
+  "steps": [
+    "Action-oriented step: what was clicked, navigated, or shown, combined with what was said about it",
+    "Next concrete step..."
+  ],
+  "why_it_matters": "One sentence on why this moment matters in the flow — only if clearly inferable from inputs, else omit"
 }"""
 
 
@@ -68,40 +70,57 @@ def _strip_json_fences(text: str) -> str:
     return t.strip()
 
 
+def _coerce_steps(raw: object) -> list[str]:
+    if not isinstance(raw, list):
+        return []
+    out: list[str] = []
+    for item in raw:
+        if isinstance(item, str) and item.strip():
+            out.append(item.strip())
+        elif isinstance(item, dict):
+            t = item.get("text") or item.get("step")
+            if isinstance(t, str) and t.strip():
+                out.append(t.strip())
+    return out
+
+
 def _fallback_ai_fields(label: str, transcript_window: str) -> dict:
     tw = transcript_window or ""
-    note = tw[:300] if tw else "[No transcript]"
-    if len(tw) > 300:
-        note += "…"
+    summary = tw[:400] if tw else "[No transcript]"
+    if len(tw) > 400:
+        summary += "…"
     return {
         "title": f"Segment at {label}",
-        "note": note,
-        "key_concepts": [],
-        "notable_details": [],
+        "summary": summary,
+        "steps": [],
     }
 
 
 def _fallback_from_exception(segment: dict, err: str) -> dict:
     label = segment.get("label", "")
     base = _fallback_ai_fields(label, segment.get("transcript_window") or "")
-    base["note"] = f"[Summary error] {base['note']}"[:500]
+    base["summary"] = f"[Summary error: {err}] {base['summary']}"[:800]
     return {**segment, **base}
 
 
-def _normalize_ai_v3(data: dict, label: str, transcript_window: str) -> dict:
+def _normalize_ai(data: dict, label: str, transcript_window: str) -> dict:
     if not isinstance(data, dict):
         return _fallback_ai_fields(label, transcript_window)
 
-    if "note" not in data and "summary" in data:
-        data["note"] = data.get("summary", "")
+    summary = data.get("summary")
+    if not isinstance(summary, str) or not summary.strip():
+        legacy = data.get("note")
+        if isinstance(legacy, str) and legacy.strip():
+            summary = legacy.strip()
+        else:
+            summary = _fallback_ai_fields(label, transcript_window)["summary"]
+
+    steps = _coerce_steps(data.get("steps"))
 
     out: dict = {
         "title": str(data.get("title") or f"Segment at {label}"),
-        "note": str(data.get("note") or ""),
-        "key_concepts": data.get("key_concepts") if isinstance(data.get("key_concepts"), list) else [],
-        "notable_details": data.get("notable_details")
-        if isinstance(data.get("notable_details"), list)
-        else [],
+        "summary": str(summary).strip(),
+        "steps": steps,
     }
     wim = data.get("why_it_matters")
     if isinstance(wim, str) and wim.strip():
@@ -121,29 +140,24 @@ def summarize_segment(segment: dict, model: str) -> dict:
     if use_vision:
         with open(screenshot_path, "rb") as f:
             b64 = base64.standard_b64encode(f.read()).decode("ascii")
-        prompt = f"""You are reviewing a screen recording on behalf of a consultant. Your job is to write a brief, sharp note that helps the consultant instantly recall what happened at this moment — without rewatching the video.
+        prompt = f"""You are helping a consultant document a screen recording of a software demo. For this moment in the video, produce structured notes they can skim later.
 
 TIMESTAMP: {label}
 
 TRANSCRIPT (what was said near this moment):
 \"\"\"{transcript_window}\"\"\"
 
-The screenshot shows what was on screen at this moment.
+A screenshot of the UI at this moment is attached.
 
-Write your note as if briefing a colleague. Be direct and specific. Use active language. Do not start with "The speaker", "In this segment", "This section", or any passive opener.
+Instructions:
+1. Look carefully at the screenshot — read visible UI: buttons, labels, field names, table headers, and data values where legible.
+2. Cross-reference with the transcript — capture what the presenter explained about what is visible.
+3. Produce a `steps` array of short, numbered-style action lines (as separate strings) that combine what was done or shown on screen with what was said about it. Each step should be concrete enough that someone who missed the call could replay this part of the demo.
+4. Write `summary` as 2-3 sentences describing what was on screen and what was being discussed (no passive "the speaker says" openers — stay direct).
+5. Only include information grounded in the screenshot and/or transcript. Do not invent screens, clicks, or business facts not supported by the inputs.
 
-Focus on:
-- What was being done or decided
-- What the screen was showing
-- Any specific values, steps, rules, or configurations mentioned
-- Why this moment matters in the overall flow
-
-If the transcript is empty, base your note only on what you see on screen.
-If the screen is unclear, base your note only on what was said.
-Only include information actually present in the screenshot or transcript — do not invent context.
-
-Respond ONLY in valid JSON, no markdown, no explanation outside the JSON:
-{_JSON_SCHEMA_VISION}"""
+Respond ONLY in valid JSON, no markdown outside the JSON:
+{_JSON_SCHEMA}"""
         payload = {
             "model": model,
             "prompt": prompt,
@@ -152,26 +166,21 @@ Respond ONLY in valid JSON, no markdown, no explanation outside the JSON:
             "options": {"temperature": 0.2},
         }
     else:
-        prompt = f"""You are reviewing a screen recording on behalf of a consultant. Your job is to write a brief, sharp note that helps the consultant instantly recall what happened at this moment — without rewatching the video. There is no screenshot — transcript only.
+        prompt = f"""You are helping a consultant document a screen recording of a software demo. There is no screenshot — use only the transcript for this moment.
 
 TIMESTAMP: {label}
 
 TRANSCRIPT (what was said near this moment):
 \"\"\"{transcript_window}\"\"\"
 
-Write your note as if briefing a colleague. Be direct and specific. Use active language. Do not start with "The speaker", "In this segment", "This section", or any passive opener.
+Instructions:
+1. Infer what was likely happening on screen only when strongly implied by the transcript; otherwise stay conservative.
+2. Produce a `steps` array of short action-oriented lines (as strings) capturing what was done or decided according to what was said.
+3. Write `summary` as 2-3 direct sentences about what was discussed. If the transcript is sparse, say so briefly. You may mention once in `summary` that no screenshot was available.
+4. Only include information grounded in the transcript.
 
-If the transcript is sparse or empty, say so briefly and only include what can be grounded in the words above. You may add "(Note: summary based on transcript only — no screenshot available)" once inside the "note" field if the transcript is sparse.
-
-Focus on:
-- What was being done or decided
-- Any specific values, steps, rules, or configurations mentioned
-- Why this moment matters in the overall flow (only if inferable from the transcript)
-
-Only include information actually present in the transcript — do not invent context.
-
-Respond ONLY in valid JSON, no markdown, no explanation outside the JSON:
-{_JSON_SCHEMA_VISION}"""
+Respond ONLY in valid JSON, no markdown outside the JSON:
+{_JSON_SCHEMA}"""
         payload = {
             "model": model,
             "prompt": prompt,
@@ -190,7 +199,7 @@ Respond ONLY in valid JSON, no markdown, no explanation outside the JSON:
         raw = body.get("response") or ""
         cleaned = _strip_json_fences(raw)
         data = json.loads(cleaned)
-        ai = _normalize_ai_v3(data, label, transcript_window)
+        ai = _normalize_ai(data, label, transcript_window)
         return {**segment, **ai}
     except (requests.RequestException, json.JSONDecodeError, TypeError, ValueError):
         return {**segment, **_fallback_ai_fields(label, transcript_window)}

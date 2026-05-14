@@ -47,7 +47,7 @@ streamlit run app.py
 1. Upload MP4 → duration and size checks in the sidebar.  
 2. **Run analysis** → ffmpeg WAV → Whisper → adaptive-interval scene detection → align transcript windows → **up to 3 parallel** Ollama segment summaries.  
 3. Browse **Timeline**, **Transcript**, **Summaries**, **Export**.  
-4. Download `summary.md`, `notable_details.md`, or a ZIP of `outputs/`.
+4. Download `summary.md`, `summary_edited.md` (from the Export tab after any edits), or a ZIP of `outputs/`.
 
 ## Tuning
 
