@@ -33,30 +33,131 @@ st.set_page_config(
 
 V3_CSS = """
 <style>
-  .stApp { background-color: #0a0a0a; }
   #MainMenu {visibility: hidden;}
   footer {visibility: hidden;}
   header {visibility: hidden;}
 
-  .segment-card {
-    background: #111111;
-    border: 1px solid #222222;
-    border-radius: 8px;
-    padding: 20px 24px;
-    margin-bottom: 16px;
-    animation: fadeSlideUp 0.4s ease forwards;
-    opacity: 0;
+  html, body, [class*="css"] {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
-  @keyframes fadeSlideUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .segment-card:nth-child(1) { animation-delay: 0.05s; }
-  .segment-card:nth-child(2) { animation-delay: 0.10s; }
-  .segment-card:nth-child(3) { animation-delay: 0.15s; }
-  .segment-card:nth-child(4) { animation-delay: 0.20s; }
-  .segment-card:nth-child(5) { animation-delay: 0.25s; }
 
+  .stApp {
+    background:
+      radial-gradient(circle at top left, rgba(59,130,246,0.14), transparent 28%),
+      radial-gradient(circle at top right, rgba(168,85,247,0.10), transparent 25%),
+      #080808;
+  }
+
+  .block-container {
+    max-width: 1400px;
+    padding-top: 3rem;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    animation: pageFade 0.45s ease-in-out;
+  }
+
+  /* Hero title */
+  h1 {
+    font-size: 3.2rem !important;
+    letter-spacing: -0.04em;
+    font-weight: 800 !important;
+  }
+
+  /* Sidebar */
+  section[data-testid="stSidebar"] {
+    background: rgba(15, 15, 15, 0.92);
+    border-right: 1px solid #242424;
+  }
+
+  section[data-testid="stSidebar"] > div {
+    padding-top: 2rem;
+  }
+
+  /* Upload box */
+  [data-testid="stFileUploader"] section {
+    background: #111827;
+    border: 1px dashed #3b82f6;
+    border-radius: 14px;
+    padding: 18px;
+  }
+
+  /* Info box */
+  [data-testid="stAlert"] {
+    border-radius: 12px;
+    border: 1px solid rgba(96,165,250,0.25);
+    background: rgba(30,64,175,0.22);
+  }
+
+  /* Buttons */
+  .stButton > button,
+  .stDownloadButton > button {
+    border-radius: 12px;
+    border: 1px solid #333;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: white;
+    font-weight: 700;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .stButton > button:hover,
+  .stDownloadButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(59,130,246,0.25);
+  }
+
+  /* Sliders */
+  .stSlider [data-baseweb="slider"] {
+    padding-top: 10px;
+  }
+
+  /* Cards — no border, hover handled on Streamlit row wrapper */
+  .segment-card {
+    background: rgba(17, 24, 39, 0.82);
+    border: none;
+    border-radius: 16px;
+    padding: 22px 24px;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.25);
+  }
+
+  /* Hover: target the Streamlit horizontal row that contains a segment card */
+  [data-testid="stHorizontalBlock"]:has(.segment-card) {
+    border-radius: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: default;
+  }
+
+  [data-testid="stHorizontalBlock"]:has(.segment-card):hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 50px rgba(0,0,0,0.35), 0 0 24px rgba(59,130,246,0.2);
+  }
+
+  /* Text areas */
+  textarea {
+    border-radius: 12px !important;
+    background: #0f172a !important;
+    border: 1px solid #334155 !important;
+  }
+
+  /* Tabs */
+  .stTabs [data-baseweb="tab-list"] {
+    gap: 10px;
+  }
+
+  .stTabs [data-baseweb="tab"] {
+    background: #111827;
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-size: 13px;
+    color: #666666;
+  }
+
+  .stTabs [aria-selected="true"] {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: white !important;
+    border-bottom: none;
+  }
+
+  /* Timestamp badge */
   .timestamp-badge {
     font-family: monospace;
     font-size: 11px;
@@ -68,6 +169,8 @@ V3_CSS = """
     display: inline-block;
     margin-bottom: 10px;
   }
+
+  /* Segment title */
   .segment-title {
     font-size: 15px;
     font-weight: 600;
@@ -75,39 +178,165 @@ V3_CSS = """
     margin-bottom: 8px;
     line-height: 1.3;
   }
+
+  /* Segment note / why it matters */
   .segment-note {
     font-size: 13px;
     color: #cccccc;
     line-height: 1.6;
     margin-bottom: 12px;
   }
-  .timeline-thumb {
-    cursor: pointer;
-    border-radius: 6px;
-    border: 1px solid #222;
-    transition: transform 0.15s ease, border-color 0.15s ease;
+
+  /* Transcript timestamps */
+  .ts { color: #666666; font-family: monospace; font-size: 11px; }
+
+  /* Muted meta text */
+  .muted-meta { color: #888888; font-size: 13px; }
+
+  hr { border-color: #1a1a1a; margin: 24px 0; }
+
+  /* Hero text */
+  .hero-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #a1a1aa;
+    margin: 0 0 1.5rem 0;
+    max-width: 36rem;
   }
-  .timeline-thumb:hover {
-    transform: translateY(-3px);
-    border-color: #555;
+
+  .hero-meta {
+    font-size: 0.85rem;
+    color: #71717a;
+    margin-top: 0.25rem;
   }
+
+  .hero-fade {
+    animation: heroFadeIn 0.55s ease-out forwards;
+    opacity: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Sidebar session label */
+  .sidebar-session-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #71717a;
+    margin-bottom: 0.35rem;
+  }
+
+  /* Step progress label */
   .step-label {
     font-family: monospace;
     font-size: 12px;
     color: #888888;
     margin-bottom: 4px;
   }
-  .stTabs [data-baseweb="tab"] {
-    font-size: 13px;
-    color: #666666;
+
+  /* Timeline thumbnails */
+  .timeline-thumb {
+    cursor: pointer;
+    border-radius: 6px;
+    border: 1px solid #222;
+    transition: transform 0.15s ease, border-color 0.15s ease;
   }
-  .stTabs [aria-selected="true"] {
-    color: #ffffff !important;
-    border-bottom: 2px solid #ffffff;
+
+  .timeline-thumb:hover {
+    transform: translateY(-3px);
+    border-color: #555;
   }
-  .ts { color: #666666; font-family: monospace; font-size: 11px; }
-  hr { border-color: #1a1a1a; margin: 24px 0; }
-  .muted-meta { color: #888888; font-size: 13px; }
+
+  /* Animations */
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes heroFadeIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pageFade {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Landing — single panel (no Streamlit border); lift + glow on hover */
+  .hero-card-panel {
+    background: linear-gradient(165deg, rgba(24,24,27,0.96), rgba(12,12,14,0.99));
+    border: 1px solid rgba(63,63,70,0.5);
+    border-radius: 18px;
+    padding: 1.75rem 2rem 1.5rem;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  }
+  .hero-card-panel:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 56px rgba(0,0,0,0.5), 0 0 40px rgba(99,102,241,0.14);
+    border-color: rgba(129,140,248,0.35);
+  }
+  .hero-card-panel .hero-title-html {
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #fafafa;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.1;
+  }
+
+  /* Results dashboard — tighter chrome */
+  .results-dedicated .block-container {
+    padding-top: 0.75rem !important;
+    max-width: 1320px !important;
+  }
+
+  @keyframes resultsEnter {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Summaries — documentation layout */
+  .segment-doc-block {
+    margin-bottom: 3.5rem;
+    padding-bottom: 2.75rem;
+    border-bottom: 1px solid #27272a;
+  }
+  .segment-doc-block:last-child {
+    border-bottom: none;
+    margin-bottom: 1rem;
+  }
+  .segment-doc-title {
+    font-size: 1.45rem;
+    font-weight: 650;
+    color: #fafafa;
+    letter-spacing: -0.025em;
+    margin: 0 0 0.4rem 0;
+    line-height: 1.22;
+  }
+  .segment-doc-summary {
+    font-size: 1.08rem;
+    line-height: 1.75;
+    color: #d4d4d8;
+    margin: 0.85rem 0 1.35rem 0;
+  }
+  .segment-steps-wrap ol.segment-steps-list {
+    margin: 0.35rem 0 0 0;
+    padding-left: 1.4rem;
+    font-size: 1.08rem;
+    line-height: 1.8;
+    color: #e4e4e7;
+  }
+  .segment-steps-wrap ol.segment-steps-list li {
+    margin-bottom: 0.65rem;
+  }
+  .segment-wim {
+    font-size: 1rem;
+    color: #a1a1aa;
+    margin-top: 1.25rem;
+    line-height: 1.6;
+  }
 </style>
 """
 
@@ -194,10 +423,28 @@ def _init_session_state() -> None:
 
 
 def _progress_bar_ascii(pct: int, width: int = 10) -> str:
-    filled = int(round(width * pct / 100.0))
-    filled = min(width, max(0, filled))
-    return "█" * filled + "░" * (width - filled)
+    return ""  # no longer used
 
+def show_step(step: int, total: int, label: str, pct: int) -> None:
+    base = int((step - 1) / total * 100)
+    span = int(100 / total)
+    overall = min(100, base + int(pct * span / 100))
+    progress_slot.progress(overall / 100.0)
+    status_slot.markdown(
+        f"""
+        <div style="font-family:monospace; font-size:13px; color:#ffffff; margin-top:6px;">
+            <span style="color:#71717a;">Step {step}/{total}</span>
+            &nbsp;·&nbsp;
+            <span>{html.escape(label)}</span>
+            &nbsp;·&nbsp;
+            <span style="color:#71717a;">{pct}%</span>
+        </div>
+        <div style="margin-top:8px; height:3px; border-radius:999px; background:#1e293b; overflow:hidden;">
+            <div style="height:100%; width:{overall}%; background:#ffffff; border-radius:999px; transition:width 0.3s ease;"></div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 def _format_ts(seconds: float) -> str:
     total = int(round(seconds))
@@ -212,6 +459,21 @@ def _clear_edit_session_keys() -> None:
             k.startswith("edit_summary_") or k.startswith("edit_step_")
         ):
             del st.session_state[k]
+
+
+def _reset_to_landing() -> None:
+    st.session_state["analysis_complete"] = False
+    st.session_state["transcripts"] = []
+    st.session_state["scenes"] = []
+    st.session_state["aligned"] = []
+    st.session_state["summaries"] = []
+    st.session_state["selected_segment"] = None
+    st.session_state["video_filename"] = ""
+    st.session_state["video_duration"] = 0.0
+    st.session_state["probe_signature"] = None
+    st.session_state["probe_duration_sec"] = None
+    _clear_edit_session_keys()
+    st.rerun()
 
 
 def _ensure_edit_fields(summaries: list) -> None:
@@ -289,60 +551,123 @@ _startup_checks()
 
 ollama_model = st.session_state.get("ollama_model", "llava")
 
-st.title("Demo Walkthrough Summarizer")
+_analysis_done = bool(st.session_state.get("analysis_complete"))
 
-with st.sidebar:
-    st.markdown("### 🎬 Demo Summarizer")
-    st.markdown("---")
+# Full-width app: no sidebar (controls live in hero or results top bar)
+st.markdown(
+    "<style>"
+    'section[data-testid="stSidebar"]{display:none!important;}'
+    '[data-testid="collapsedControl"]{display:none!important;}'
+    "</style>",
+    unsafe_allow_html=True,
+)
 
-    over_limit = False
-    over_size = False
-    uploaded = st.file_uploader(
+# Defaults for `if run` (both flows assign before use)
+uploaded = None
+probe_dur = None
+over_limit = False
+over_size = False
+whisper_size = "base"
+threshold = 25
+min_gap = 8
+run = False
+progress_slot = None
+status_slot = None
+
+
+def _render_analysis_controls(*, uploader_key: str = "upload_recording") -> tuple:
+    """Upload + sliders + duration checks + Run + progress placeholders. Returns control tuple."""
+    ol = False
+    osz = False
+    up = st.file_uploader(
         "Upload recording (MP4, max ~2GB / 60 min)",
         type=["mp4"],
+        key=uploader_key,
     )
-
-    probe_dur: float | None = None
-    if uploaded is not None:
-        if uploaded.size > MAX_UPLOAD_BYTES:
+    pd: float | None = None
+    if up is not None:
+        if up.size > MAX_UPLOAD_BYTES:
             st.error("❌ File exceeds ~2GB. Compress the video and try again.")
-            over_size = True
+            osz = True
         else:
-            probe_dur = _probe_upload_duration(uploaded)
+            pd = _probe_upload_duration(up)
 
-    if uploaded is not None and not over_size and probe_dur is not None:
-        mins = int(probe_dur // 60)
-        secs = int(probe_dur % 60)
-        if probe_dur > MAX_DURATION_SEC:
+    if up is not None and not osz and pd is not None:
+        mins = int(pd // 60)
+        secs = int(pd % 60)
+        if pd > MAX_DURATION_SEC:
             st.error(f"❌ {mins}m {secs}s — exceeds 60 min limit")
-            over_limit = True
+            ol = True
         else:
             st.success(f"✅ {mins}m {secs}s — within limits")
 
-    st.markdown("---")
     st.markdown("**Transcription**")
-    whisper_size = st.select_slider(
+    ws = st.select_slider(
         "Whisper model",
         options=["tiny", "base", "small"],
         value="base",
     )
-
     st.markdown("**Scene detection**")
-    threshold = st.slider("Sensitivity", 10, 50, 25)
-    min_gap = st.slider("Min gap (seconds)", 5, 20, 8)
+    th = st.slider("Sensitivity", 10, 50, 25)
+    mg = st.slider("Min gap (seconds)", 5, 20, 8)
 
-    st.markdown("---")
-    st.markdown(f"**Model:** `{ollama_model}`")
-
-    run = st.button(
+    rn = st.button(
         "▶ Run Analysis",
         type="primary",
         use_container_width=True,
-        disabled=uploaded is None or over_limit or over_size,
+        disabled=up is None or ol or osz,
     )
+    ps = st.empty()
+    ss = st.empty()
+    return up, pd, ol, osz, ws, th, mg, rn, ps, ss
 
-    progress_slot = st.empty()
-    status_slot = st.empty()
+
+if not _analysis_done:
+    st.markdown('<div class="landing-main">', unsafe_allow_html=True)
+    _, hero_col, _ = st.columns([1, 2.2, 1])
+    with hero_col:
+        st.markdown('<div class="hero-fade">', unsafe_allow_html=True)
+        st.markdown(
+            '<div class="hero-card-panel">'
+            '<h1 class="hero-title-html">Demo Walkthrough Summarizer</h1>'
+            '<p class="hero-subtitle">Turn walkthrough recordings into transcripts, scene '
+            "screenshots, structured summaries, and exportable notes — all processed locally "
+            "on your machine.</p>"
+            "</div>",
+            unsafe_allow_html=True,
+        )
+        st.markdown("---")
+        (
+            uploaded,
+            probe_dur,
+            over_limit,
+            over_size,
+            whisper_size,
+            threshold,
+            min_gap,
+            run,
+            progress_slot,
+            status_slot,
+        ) = _render_analysis_controls(uploader_key="hero_upload")
+        st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
+else:
+    vf = st.session_state.get("video_filename") or "—"
+    vd = float(st.session_state.get("video_duration") or 0.0)
+    vm = int(vd // 60)
+    vs = int(vd % 60)
+    tb_l, tb_r = st.columns([1, 4])
+    with tb_l:
+        if st.button("← New analysis", key="results_new_analysis"):
+            _reset_to_landing()
+    with tb_r:
+        st.markdown(
+            f'<p class="muted-meta" style="margin-top:0.35rem;">'
+            f"<b>File:</b> {html.escape(str(vf))} &nbsp;·&nbsp; "
+            f"<b>Duration:</b> {vm}m {vs}s &nbsp;·&nbsp; "
+            f"<b>Model:</b> <code>{html.escape(str(ollama_model))}</code></p>",
+            unsafe_allow_html=True,
+        )
 
 
 def _run_analysis(
@@ -356,18 +681,6 @@ def _run_analysis(
     progress_slot,
     status_slot,
 ) -> None:
-    def show_step(step: int, total: int, label: str, pct: int) -> None:
-        bar = _progress_bar_ascii(pct)
-        base = int((step - 1) / total * 100)
-        span = int(100 / total)
-        overall = min(100, base + int(pct * span / 100))
-        progress_slot.progress(overall / 100.0)
-        status_slot.markdown(
-            f'<p class="step-label">Step {step}/{total}: {html.escape(label)}  '
-            f"<code>{bar}</code>  <b>{pct}%</b></p>",
-            unsafe_allow_html=True,
-        )
-
     if video_duration_sec > MAX_DURATION_SEC:
         st.error(
             f"❌ Video is {video_duration_sec / 60:.0f} minutes long. Maximum allowed is 60 minutes. "
@@ -431,12 +744,14 @@ def _run_analysis(
             st.session_state["video_filename"] = filename
             st.session_state["video_duration"] = video_duration_sec
             st.session_state["analysis_complete"] = True
+            st.session_state["_results_page_enter"] = True
             st.session_state["selected_segment"] = None
             status.update(label="Complete", state="complete")
         except Exception as exc:
             status.update(label="Failed", state="error")
             st.error(f"Analysis failed: {exc}")
             return
+    st.rerun()
 
 
 if run:
@@ -480,10 +795,18 @@ if run:
                 pass
 
 if not st.session_state.get("analysis_complete"):
-    st.info(
-        "Upload an MP4 (≤ 60 min, ≤ ~2 GB). Configure options in the sidebar, then run analysis."
-    )
     st.stop()
+
+_enter = st.session_state.pop("_results_page_enter", False)
+_anim = (
+    "animation: resultsEnter 0.72s ease-out forwards !important;"
+    if _enter
+    else ""
+)
+st.markdown(
+    f"<style>.main .block-container {{ padding-top: 0.85rem !important; {_anim} }}</style>",
+    unsafe_allow_html=True,
+)
 
 tab_timeline, tab_transcript, tab_summaries, tab_export = st.tabs(
     ["🗂 Timeline", "📝 Transcript", "🧠 Summaries", "📦 Export"]
@@ -545,49 +868,75 @@ with tab_transcript:
     )
 
 with tab_summaries:
-    st.subheader("Summaries by segment")
     _ensure_edit_fields(summaries)
     selected = st.session_state.get("selected_segment")
     for i, s in enumerate(summaries):
         is_sel = selected is not None and i == int(selected)
-        if is_sel:
-            st.success(f"Selected — {s.get('label', '')}")
-        col1, col2 = st.columns([1, 2])
-        with col1:
+        label_e = html.escape(str(s.get("label", "")))
+        title_e = html.escape(str(s.get("title", "")))
+        summary_text = st.session_state.get(
+            f"edit_summary_{i}", str(s.get("summary", s.get("note", "")) or "")
+        )
+        steps_src = s.get("steps") if isinstance(s.get("steps"), list) else []
+        step_items: list[str] = []
+        for j in range(len(steps_src)):
+            step_items.append(
+                st.session_state.get(
+                    f"edit_step_{i}_{j}", str(steps_src[j] if steps_src[j] is not None else "")
+                )
+            )
+        ol_parts = []
+        for j, line in enumerate(step_items):
+            ol_parts.append(f"<li>{html.escape(line)}</li>")
+        ol_html = (
+            f'<ol class="segment-steps-list">{"".join(ol_parts)}</ol>'
+            if ol_parts
+            else '<p class="muted-meta" style="margin:0;">No steps.</p>'
+        )
+
+        col_thumb, col_doc = st.columns([1, 2])
+        with col_thumb:
             p = s.get("screenshot_path") or ""
             if p and Path(p).is_file():
                 st.image(p, use_container_width=True)
-        with col2:
-            label_e = html.escape(str(s.get("label", "")))
-            title_e = html.escape(str(s.get("title", "")))
+        with col_doc:
+            sel_note = (
+                '<p class="muted-meta" style="margin:0 0 0.75rem 0;">Selected segment</p>'
+                if is_sel
+                else ""
+            )
+            wim = s.get("why_it_matters")
+            wim_html = (
+                f'<div class="segment-wim"><b>Why it matters:</b> '
+                f"{html.escape(str(wim))}</div>"
+                if wim
+                else ""
+            )
+            sum_esc = html.escape(summary_text)
             st.markdown(
-                f'<div class="segment-card">'
-                f'<div class="timestamp-badge">{label_e}</div>'
-                f'<div class="segment-title">{title_e}</div></div>',
+                f'<div class="segment-doc-block">{sel_note}'
+                f'<p class="timestamp-badge">{label_e}</p>'
+                f'<h3 class="segment-doc-title">{title_e}</h3>'
+                f'<div class="segment-doc-summary" style="white-space:pre-wrap;">{sum_esc}</div>'
+                f'<div class="segment-steps-wrap">{ol_html}</div>'
+                f"{wim_html}</div>",
                 unsafe_allow_html=True,
             )
-            st.text_area(
-                "Summary",
-                key=f"edit_summary_{i}",
-                height=90,
-                label_visibility="collapsed",
-            )
-            st.markdown("**Steps**")
-            steps_list = s.get("steps") if isinstance(s.get("steps"), list) else []
-            for j in range(len(steps_list)):
+            with st.expander("Edit summary & steps"):
                 st.text_area(
-                    f"Step {j + 1}",
-                    key=f"edit_step_{i}_{j}",
-                    height=68,
+                    "Summary",
+                    key=f"edit_summary_{i}",
+                    height=120,
                     label_visibility="collapsed",
                 )
-            wim = s.get("why_it_matters")
-            if wim:
-                st.markdown(
-                    f'<div class="segment-note"><b>Why it matters:</b> '
-                    f"{html.escape(str(wim))}</div>",
-                    unsafe_allow_html=True,
-                )
+                st.markdown("**Steps** (one field per step)")
+                for j in range(len(steps_src)):
+                    st.text_area(
+                        f"Step {j + 1}",
+                        key=f"edit_step_{i}_{j}",
+                        height=72,
+                        label_visibility="collapsed",
+                    )
 
 with tab_export:
     st.subheader("Downloads")

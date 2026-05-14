@@ -14,13 +14,13 @@ OLLAMA_BASE = "http://localhost:11434"
 SUMMARY_JSON = Path("outputs/summaries/summary.json")
 
 _JSON_SCHEMA = """{
-  "title": "Short label for the scene (5-10 words, e.g. 'Filing Setup — Entity Selection')",
-  "summary": "2-3 sentences describing what was on screen and what was being discussed at this moment",
+  "title": "Short neutral label for the screen state (5-10 words, e.g. 'Entity type selection — new filing')",
+  "summary": "2-3 sentences of neutral product documentation: what the UI shows and what the narration covers. Do not name roles (consultant, client, presenter). Use passive or imperative voice ('The form displays…', 'Tax ID is entered…').",
   "steps": [
-    "Action-oriented step: what was clicked, navigated, or shown, combined with what was said about it",
-    "Next concrete step..."
+    "Imperative or passive step grounded in UI + narration, e.g. 'Select LLC in the entity dropdown'",
+    "Next concrete step — no 'they' or 'someone'"
   ],
-  "why_it_matters": "One sentence on why this moment matters in the flow — only if clearly inferable from inputs, else omit"
+  "why_it_matters": "One sentence on workflow significance — neutral, no roles — only if inferable from inputs, else omit"
 }"""
 
 
@@ -140,21 +140,21 @@ def summarize_segment(segment: dict, model: str) -> dict:
     if use_vision:
         with open(screenshot_path, "rb") as f:
             b64 = base64.standard_b64encode(f.read()).decode("ascii")
-        prompt = f"""You are helping a consultant document a screen recording of a software demo. For this moment in the video, produce structured notes they can skim later.
+        prompt = f"""Produce neutral, agentless documentation for this moment in a screen recording (as if writing internal product notes, not meeting minutes).
 
 TIMESTAMP: {label}
 
-TRANSCRIPT (what was said near this moment):
+NARRATION (audio near this moment, may describe UI actions):
 \"\"\"{transcript_window}\"\"\"
 
 A screenshot of the UI at this moment is attached.
 
-Instructions:
-1. Look carefully at the screenshot — read visible UI: buttons, labels, field names, table headers, and data values where legible.
-2. Cross-reference with the transcript — capture what the presenter explained about what is visible.
-3. Produce a `steps` array of short, numbered-style action lines (as separate strings) that combine what was done or shown on screen with what was said about it. Each step should be concrete enough that someone who missed the call could replay this part of the demo.
-4. Write `summary` as 2-3 sentences describing what was on screen and what was being discussed (no passive "the speaker says" openers — stay direct).
-5. Only include information grounded in the screenshot and/or transcript. Do not invent screens, clicks, or business facts not supported by the inputs.
+Rules:
+1. Examine the screenshot: buttons, labels, fields, tables, and legible values.
+2. Cross-check the narration for factual tie-ins to what is visible.
+3. Write `summary` in calm documentation style: what the screen shows and what the narration establishes. Never attribute actions to a person or role (no consultant, client, presenter, user names). Prefer passive voice or imperative ("The dropdown lists…", "Navigate to…").
+4. `steps`: short strings, each one concrete UI/navigation or data fact tied to narration when relevant. No "they explained" or "someone clicked" — write as procedure ("Open X", "Field Y shows Z", "Value entered in …").
+5. Only facts supported by screenshot and/or transcript.
 
 Respond ONLY in valid JSON, no markdown outside the JSON:
 {_JSON_SCHEMA}"""
@@ -166,18 +166,18 @@ Respond ONLY in valid JSON, no markdown outside the JSON:
             "options": {"temperature": 0.2},
         }
     else:
-        prompt = f"""You are helping a consultant document a screen recording of a software demo. There is no screenshot — use only the transcript for this moment.
+        prompt = f"""Produce neutral, agentless documentation for this moment. No screenshot is available — use only the narration text.
 
 TIMESTAMP: {label}
 
-TRANSCRIPT (what was said near this moment):
+NARRATION:
 \"\"\"{transcript_window}\"\"\"
 
-Instructions:
-1. Infer what was likely happening on screen only when strongly implied by the transcript; otherwise stay conservative.
-2. Produce a `steps` array of short action-oriented lines (as strings) capturing what was done or decided according to what was said.
-3. Write `summary` as 2-3 direct sentences about what was discussed. If the transcript is sparse, say so briefly. You may mention once in `summary` that no screenshot was available.
-4. Only include information grounded in the transcript.
+Rules:
+1. Stay conservative about unseen UI; only state what the narration reasonably implies.
+2. `summary`: 2-3 sentences, neutral documentation tone. No roles (consultant, client, etc.). If narration is sparse, say so briefly and note that visual context was unavailable.
+3. `steps`: short procedural lines grounded in what was said — no "they" or "someone".
+4. No facts not supported by the transcript.
 
 Respond ONLY in valid JSON, no markdown outside the JSON:
 {_JSON_SCHEMA}"""

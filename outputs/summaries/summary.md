@@ -1,209 +1,207 @@
 # Demo Walkthrough Summary
-Generated: 2026-05-14 11:18:04 EDT
+Generated: 2026-05-14 12:19:45 EDT
 Video: IPO Walkthrough-2_Mervin_12.17.25 (online-video-cutter.com).mp4
 Duration: 00:09:18
 Total Segments: 17
 
 ---
 
-## [00:00:02] Lifecycles and Allocation Setup
+## [00:00:02] Lifecycle Calendar Configuration
 
-**Summary:** The consultant discussed lifecycle calendars with the client, explaining that different lifecycles can be created based on specific criteria. No screenshot was available for this moment.
+**Summary:** The UI displays a list of lifecycle phases. The narration discusses creating different lifecycles per specific criteria, such as subclass and region.
 
 **Steps:**
-1. Checked if lifecycle calendar discussion was possible
-2. Explained how to create different lifecycles per subclass and region
+1. Check if the lifecycle calendar can be created with different phases for specific subclasses and regions.
+2. Consider allocating management based on the lifecycle calendar.
 
 ---
 
-## [00:00:30] Lifecycle Calendar Setup
+## [00:00:30] Lifecycle Calendar Configuration
 
-**Summary:** The consultant discussed the lifecycle calendar feature with the client. They explained that different lifecycle phases can be created based on specific criteria such as subclass and region. No screenshot was available for this moment.
+**Summary:** The UI displays a table with preloaded lifecycle phases. The narration discusses the allocation of management and creation of different lifecycles based on specific criteria.
 
 **Steps:**
-1. Checked if lifecycle calendar setup could be demonstrated
-2. Explained how to create different lifecycle phases per specific criteria
+1. Check if lifecycle calendar has been discussed previously.
+2. Review the staging table that holds all lifecycle phases.
 
-**Why it matters:** This moment matters because it sets the stage for understanding how lifecycle phases are managed in the software.
+**Why it matters:** This configuration is relevant to managing entities with varying lifecycle needs.
 
 ---
 
-## [00:01:00] Lifecycle Phase Setup and Management
+## [00:01:00] Entity lifecycle phase selection
 
-**Summary:** The consultant discussed setting up lifecycle phases for specific criteria, such as subclass and region. The current setup has four different lifecycle phases preloaded in a staging table. No screenshot was available.
+**Summary:** The UI displays a table of preloaded entity lifecycle phases. The narration explains that these phases can be loaded through the staging table and are used to set up different lifecycle spaces for specific criteria.
 
 **Steps:**
-1. Explained that lifecycle phases can be set up based on specific criteria
-2. Showed the preloaded lifecycle phases in a staging table
-3. Indicated that these phases can be managed through the 'Manage Workbook' feature
+1. Review the list of preloaded entity lifecycle phases in the table.
+2. Load additional lifecycle phases into the system using the staging table.
 
-**Why it matters:** This moment matters because it sets the stage for understanding how to manage and configure lifecycle phases.
+**Why it matters:** This setup is necessary for managing data and workflows related to entity lifecycle phases.
 
 ---
 
-## [00:01:09] Lifecycle Phase Setup and Data Management
+## [00:01:09] Lifecycle Phase Selection
 
-**Summary:** The consultant discussed lifecycle phase setup and data management capabilities. The system allows for multiple lifecycle phases to be set up and managed through a staging table. No screenshot was available.
+**Summary:** The UI displays a table of preloaded lifecycle phases. The narration explains that these phases can be loaded through the staging table and managed in the innovation worth bench.
 
 **Steps:**
-1. Loaded preconfigured lifecycle phases into the system.
-2. Navigated to the manage workbook in the innovation worth bench.
+1. Review the list of preloaded lifecycle phases in the table.
+2. Load additional lifecycle phases through the staging table.
 
-**Why it matters:** This moment matters because it highlights the system's ability to handle multiple lifecycle phases and provide data management capabilities.
+**Why it matters:** This selection affects data management and querying in the innovation worth bench.
 
 ---
 
-## [00:01:30] Lifecycle Phases Setup and Data Management
+## [00:01:30] Entity lifecycle phases setup
 
-**Summary:** The consultant discussed setting up lifecycle phases through a staging table. No UI is currently available for this setup. The user can manage workbooks to query data.
+**Summary:** The UI displays a table with four lifecycle phases. The narration discusses loading these phases through a staging table and querying them in the manage workbook.
 
 **Steps:**
-1. Loaded four different lifecycle phases into the staging table.
-2. Navigated to the 'Manage Workbook' section in the 'Innovation Worth Bench'.
-3. Decided to view which lifecycle phase has been loaded in the environment.
-
-**Why it matters:** This moment matters as it sets up the foundation for data management and querying within the application.
+1. Load lifecycle phases from the staging table into the table displayed on screen.
+2. Navigate to the manage workbook, specifically the innovation worth bench.
 
 ---
 
-## [00:02:01] Navigating Lifecycle Phases and Data Management
+## [00:02:01] Lifecycle Phase Selection
 
-**Summary:** The consultant discussed navigating lifecycle phases and data management within the software. The conversation touched on querying data using the 'manage innovation worth bench' feature. No screenshot was available for this moment.
+**Summary:** The UI displays a manage workbook with an innovation worth bench. The narrator discusses four lifecycle phases and how to view loaded data.
 
 **Steps:**
-1. Navigated to the 'Manage Workbook' section
-2. Selected the 'Innovation Worth Bench' option
+1. Navigate to the manage workbook and select the innovation worth bench.
+2. From the manage worth bench, query for lifecycle phase information.
 
-**Why it matters:** This moment is crucial as it sets up the foundation for understanding lifecycle phases and data management within the software.
+**Why it matters:** Understanding lifecycle phases is crucial for loading data correctly in this environment.
 
 ---
 
-## [00:03:13] Defining Lifecycle Phases and Attributes
+## [00:03:13] Entity lifecycle phase configuration
 
-**Summary:** The consultant discussed defining lifecycle phases and attributes with the client. The details of which file to use are found in the RAP interface document. No screenshot was available.
+**Summary:** The UI displays a table for configuring entity lifecycle phases. The narrator explains the purpose and structure of this table, including the fields for phase type, start date, end date, and duration.
 
 **Steps:**
-1. Navigated to the RAP interface document for reference on file usage.
-2. Explained how to define lifecycle phases, including up to six phases: initial location, co-reading, and others.
+1. Review the RAP interface document to determine which file to use for configuration
+2. Configure up to six lifecycle phases in the table, specifying phase type, start date, end date, and duration
 
-**Why it matters:** This moment matters because it clarifies how to set up lifecycle phases in the software.
+**Why it matters:** This configuration is necessary for defining entity lifecycle phases.
 
 ---
 
-## [00:03:58] Defining Lifecycle Phases and Assertions
+## [00:03:58] Entity lifecycle phase configuration
 
-**Summary:** The consultant discussed defining lifecycle phases and assertions with the user. The conversation covered how to set up phases, including start dates and durations. No screenshot was available for this moment.
+**Summary:** The form displays a table for configuring entity lifecycle phases. The narrator explains how to define phases, including start and end dates, based on assertion start date.
 
 **Steps:**
-1. Defined what a phase is and its relationship to co-reading
-2. Explained that up to six lifecycle phases can be defined from this location
-3. Mentioned the ability to update the table directly from Innovation Worth Bench
+1. Define up to six lifecycle phases in the table.
+2. Configure each phase with a start date based on the assertion start date.
 
-**Why it matters:** This moment matters because it sets the stage for understanding how to structure and manage project timelines.
+**Why it matters:** This configuration affects the entity's status and timeline.
 
 ---
 
 ## [00:04:50] Configuring Lifecycle Phases for Rules
 
-**Summary:** The consultant discussed configuring lifecycle phases for rules, specifically for replenishment. The system configuration allows defining up to six lifecycle phases and associating them with rule categories. No screenshot was available.
+**Summary:** The system allows defining up to six lifecycle phases and assigning them to rule categories. The left cycle calendar setup is not mandatory. A custom date can be used in rules with a parameter referencing the lifecycle phase.
 
 **Steps:**
-1. Defined up to six lifecycle phases in the system configuration.
-2. Decided that the left cycle calendar setup is not mandatory.
-3. Explained that a lifecycle phase can be used for custom date rules.
+1. Define up to six lifecycle phases.
+2. Assign each phase to a rule category.
 
-**Why it matters:** This moment matters because it shows how to configure lifecycle phases, which are crucial for rule-based decision-making in the system.
+**Why it matters:** This configuration affects how rules are applied based on specific dates and events.
 
 ---
 
-## [00:05:08] Defining Lifecycle Phases for Replenishment Rules
+## [00:05:08] Configuring Lifecycle Phases for Replenishment
 
-**Summary:** The consultant is explaining how to define up to six lifecycle phases and assign them to rule categories. The system configuration allows defining start and end dates for replenishing items. No screenshot was available.
+**Summary:** The system allows defining up to six lifecycle phases. The replenishment example demonstrates how to use a rule parameter with a custom date based on the lifecycle phase. Users can configure this in the system settings.
 
 **Steps:**
-1. Defined up to six lifecycle phases in the system configuration.
-2. Assigned a lifecycle phase to the 'replenishment' rule category.
-3. Configured custom date using lifecycle phase as a rule parameter.
+1. Define up to six lifecycle phases in the system configuration.
+2. Specify which rule categories will use lifecycle phases for their rules.
 
-**Why it matters:** This step is crucial for setting up replenishment rules and ensuring accurate inventory management.
+**Why it matters:** This workflow is significant because it enables users to customize replenishment rules based on specific lifecycle phases.
 
 ---
 
 ## [00:05:21] Rule Category Configuration
 
-**Summary:** The consultant discussed configuring rule categories to use lifecycle phase for rules. No screenshot was available.
+**Summary:** The system configuration allows defining rule categories that use lifecycle phase for their rules. The left cycle calendar setup is not mandatory and can be customized with a start and end date for replenishment.
 
 **Steps:**
-1. Defined a rule category to use lifecycle phase for its rules
-2. Explained the option to use a custom date with lifecycle phase in system configuration
+1. Define if the rule category will use lifecycle phase for its rules in the system configuration.
+2. Customize the cycle calendar setup, including defining a start and end date for replenishment.
+
+**Why it matters:** This configuration affects how rules are applied to entities with specific lifecycle phases.
 
 ---
 
-## [00:05:33] Rule Category Configuration Options
+## [00:05:33] Rule Category Configuration
 
-**Summary:** The consultant discussed configuring rule categories to use lifecycle phase for rules. No screenshot was available.
+**Summary:** The system configuration allows defining rule categories that use lifecycle phase for their rules. The left cycle calendar setup is optional and can be configured with start and end dates to replenish it. The lifecycle active concept is not applicable in this case.
 
 **Steps:**
-1. Defined whether each rule category uses lifecycle phase for its rules.
-2. Explained the optional nature of lifecycle active in this configuration.
+1. Define if a rule category will use lifecycle phase for its rules
+2. Configure the cycle calendar setup with start and end dates
+
+**Why it matters:** This configuration affects the application of rules to entities.
 
 ---
 
-## [00:05:46] Custom Date Setup for Lifecycle Phase
+## [00:05:46] Custom Date Setup for Replenishment
 
-**Summary:** The consultant discussed custom date setup using lifecycle phase and system configuration. No screenshot was available. The left cycle calendar setup is not mandatory.
+**Summary:** The system configuration allows defining a custom date using the lifecycle phase. The left cycle calendar setup is not mandatory and can be customized with start and end dates for replenishment.
 
 **Steps:**
-1. Defined a rule parameter for custom date using lifecycle phase in system configuration.
-2. Explained that the left cycle calendar setup is optional and can be enabled in system configuration.
+1. Define start and end date when you want to replenish it in the system configuration.
+2. Customize the cycle calendar setup as needed, but note that a lifecycle active concept is optional.
 
-**Why it matters:** This moment matters because it explains how to set up custom dates for lifecycle phases.
+**Why it matters:** This custom date setup affects the replenishment process for specific items or locations.
 
 ---
 
-## [00:06:52] Provision Environment Setup
+## [00:06:52] Provision Environment Configuration
 
-**Summary:** The consultant explained that custom dates and left cycle are not active by default. The user needs to enable them in system configuration first. No screenshot was available for this moment.
+**Summary:** The provision environment is received with default settings. Custom dates and left cycle are not active by default and must be enabled in the system configuration. Rules for room management are defined.
 
 **Steps:**
-1. Received provision environment with default settings
-2. Enabled custom dates in system configuration
+1. Enable custom dates in the system configuration.
+2. Define all possible rules for room management, including auto approval, cross-dalking, initial location rules, and others.
 
-**Why it matters:** This step is crucial for setting up the correct workflow and rules in the system.
+**Why it matters:** Enabling custom dates and defining room management rules is necessary to activate features and configure workflow settings.
 
 ---
 
-## [00:07:03] System Configuration - Custom Dates Activation
+## [00:07:03] Custom Date Configuration
 
-**Summary:** The consultant explained that custom dates are not enabled by default and need to be activated in system configuration. This is necessary for certain features to work properly. No screenshot was available.
+**Summary:** The system displays a list of rules for custom dates and left cycles. The narrator explains that these rules must be enabled in the system configuration to become active. Without enabling them, the custom date and left cycle features will not function.
 
 **Steps:**
-1. Navigated to system configuration settings
-2. Enabled custom dates feature
+1. Enable custom dates in the system configuration
+2. Define all possible rules in room management
 
-**Why it matters:** This step ensures that the software can utilize custom dates, which are crucial for specific workflows.
+**Why it matters:** Enabling custom dates allows for tailored workflow configurations.
 
 ---
 
-## [00:07:11] Enabling Custom Dates and Defining Rules
+## [00:07:11] Enabling Custom Dates in Room Management
 
-**Summary:** The consultant explained that custom dates need to be enabled for certain features to work. They demonstrated how to define rules in room management, including auto approval, cross-dalking, initial location rules, and custom strategies.
+**Summary:** The room management interface displays a list of rules. The narrator explains that custom dates must be enabled to view the left cycle active. Rules can be defined for auto approval, cross-dalking, initial location, and other strategies.
 
 **Steps:**
-1. Enabled custom dates on the screen
-2. Defined multiple rules in room management, including auto approval, cross-dalking, and initial location rules
+1. Enable custom dates in the room management settings
+2. Define all possible rules first, including auto approval, cross-dalking, and initial location rules
 
-**Why it matters:** This step is crucial for understanding how to configure the software's workflow.
+**Why it matters:** Enabling custom dates is necessary to view the left cycle active and define lifecycle phases.
 
 ---
 
-## [00:08:50] Rule Parameters and Attribute Discussion
+## [00:08:50] Entity type selection — new filing
 
-**Summary:** The consultant discussed rule parameters vs attributes with the user. No screenshot was available for this moment.
+**Summary:** The form displays entity types for a new filing. The user is considering different rules for the selected entity type. Lifecycle and rule parameters are being discussed.
 
 **Steps:**
-1. Discussed limitations of attribute options in software demo
-2. Explained that lifecycle is a different rule parameter, not an attribute
-3. Decided to use 'time' as a rule parameter for initial allocation and maturity
+1. Consider creating different rules for the selected entity type.
+2. Explore using lifecycle as a rule parameter instead of an attribute.
+
+**Why it matters:** This step affects the workflow by allowing users to tailor their approach based on specific entity types and rules.
 
 ---
