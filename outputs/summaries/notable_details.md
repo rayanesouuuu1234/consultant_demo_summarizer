@@ -1,0 +1,46 @@
+# Notable Details & Decisions
+
+Extracted across all segments — based only on transcript and screenshots.
+
+- [00:00:02] subclass
+- [00:00:02] region
+- [00:00:02] two phases per cycle
+- [00:00:30] subclass and region as specific criteria
+- [00:00:30] cycle of phase three to five
+- [00:01:00] four different lifecycle phases
+- [00:01:00] specific subclass and region
+- [00:01:09] four different lifecycle phases
+- [00:01:09] phase three five
+- [00:01:30] four lifecycle phases
+- [00:01:30] manage workbook
+- [00:02:01] internal table
+- [00:02:01] directly loaded to not understanding table
+- [00:03:13] six lifecycle phases
+- [00:03:13] starting and end date
+- [00:03:58] up to six phases
+- [00:03:58] start date based on assertment start date
+- [00:03:58] days from start or before end date
+- [00:04:50] up to six lifecycle phases
+- [00:04:50] rule categories
+- [00:04:50] left cycle calendar setup
+- [00:05:08] up to six lifecycle phases
+- [00:05:08] custom date using lifecycle phase
+- [00:05:08] left cycle calendar setup
+- [00:05:21] left cycle calendar setup
+- [00:05:21] unlike large
+- [00:05:33] left cycle calendar setup
+- [00:05:33] system configuration
+- [00:05:46] custom date replenishment
+- [00:05:46] enable lifecycle active
+- [00:06:52] auto approval rule
+- [00:06:52] cross-dalking rules
+- [00:06:52] initial location rules
+- [00:07:03] default settings
+- [00:07:03] 19/10 possible rules mentioned
+- [00:07:11] auto approval
+- [00:07:11] cross-dalking
+- [00:07:11] initial location rules
+- [00:07:11] lifecycle phases
+- [00:08:50] initial allocation
+- [00:08:50] maturity
+- [00:08:50] time supply
