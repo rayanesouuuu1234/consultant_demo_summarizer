@@ -27,7 +27,7 @@ from utils.transcriber import extract_audio, transcribe
 
 st.set_page_config(
     layout="wide",
-    page_title="Demo Walkthrough Summarizer",
+    page_title="AI Summarizer",
     page_icon="🎬",
 )
 
@@ -75,7 +75,7 @@ V3_CSS = """
 
   /* Upload box */
   [data-testid="stFileUploader"] section {
-    background: #111827;
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
     border: 1px dashed #3b82f6;
     border-radius: 14px;
     padding: 18px;
@@ -88,8 +88,31 @@ V3_CSS = """
     background: rgba(30,64,175,0.22);
   }
 
-  /* Buttons */
-  .stButton > button,
+  /* Buttons — primary Run Analysis keeps blue/purple; others use neutral card style */
+  .stButton > button[kind="secondary"],
+  .stButton > button[kind="tertiary"] {
+    border-radius: 12px;
+    border: 1px solid #333;
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+    color: #e4e4e7;
+    font-weight: 600;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+
+  .stButton > button[kind="primary"] {
+    border-radius: 12px;
+    border: 1px solid #333;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: white;
+    font-weight: 700;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .stButton > button[kind="primary"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(59,130,246,0.25);
+  }
+
   .stDownloadButton > button {
     border-radius: 12px;
     border: 1px solid #333;
@@ -99,10 +122,16 @@ V3_CSS = """
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
 
-  .stButton > button:hover,
   .stDownloadButton > button:hover {
     transform: translateY(-2px);
     box-shadow: 0 12px 30px rgba(59,130,246,0.25);
+  }
+
+  .stButton > button[kind="secondary"]:hover,
+  .stButton > button[kind="tertiary"]:hover {
+    transform: translateY(-1px);
+    border-color: #52525b;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
   }
 
   /* Sliders */
@@ -112,8 +141,8 @@ V3_CSS = """
 
   /* Cards — no border, hover handled on Streamlit row wrapper */
   .segment-card {
-    background: rgba(17, 24, 39, 0.82);
-    border: none;
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+    border: 1px solid #27272a;
     border-radius: 16px;
     padding: 22px 24px;
     box-shadow: 0 18px 45px rgba(0,0,0,0.25);
@@ -134,7 +163,7 @@ V3_CSS = """
   /* Text areas */
   textarea {
     border-radius: 12px !important;
-    background: #0f172a !important;
+    background: linear-gradient(135deg, #0c0c0c, #141414) !important;
     border: 1px solid #334155 !important;
   }
 
@@ -144,17 +173,56 @@ V3_CSS = """
   }
 
   .stTabs [data-baseweb="tab"] {
-    background: #111827;
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
     border-radius: 999px;
     padding: 8px 18px;
     font-size: 13px;
-    color: #666666;
+    color: #a1a1aa;
+    border: 1px solid #27272a;
   }
 
   .stTabs [aria-selected="true"] {
     background: linear-gradient(135deg, #2563eb, #7c3aed);
     color: white !important;
     border-bottom: none;
+    border-color: transparent;
+  }
+
+  .stTabs [role="tabpanel"] {
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+    border-radius: 14px;
+    border: 1px solid #27272a;
+    padding: 1rem 1.25rem 1.25rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Expanders */
+  [data-testid="stExpander"] details {
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+    border: 1px solid #27272a;
+    border-radius: 12px;
+  }
+  [data-testid="stExpander"] summary {
+    border-radius: 12px;
+  }
+  [data-testid="stExpander"] [data-testid="stExpanderDetails"] {
+    background: linear-gradient(135deg, #0c0c0c, #161616);
+    border-radius: 0 0 12px 12px;
+  }
+
+  /* st.status — pipeline card */
+  [data-testid="stStatus"] {
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a) !important;
+    border: 1px solid #27272a !important;
+    border-radius: 14px !important;
+  }
+  [data-testid="stStatus"] [data-testid="stVerticalBlock"] {
+    width: 100%;
+  }
+  [data-testid="stStatus"] .pipeline-progress-stack {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
   }
 
   /* Timestamp badge */
@@ -233,19 +301,6 @@ V3_CSS = """
     margin-bottom: 4px;
   }
 
-  /* Timeline thumbnails */
-  .timeline-thumb {
-    cursor: pointer;
-    border-radius: 6px;
-    border: 1px solid #222;
-    transition: transform 0.15s ease, border-color 0.15s ease;
-  }
-
-  .timeline-thumb:hover {
-    transform: translateY(-3px);
-    border-color: #555;
-  }
-
   /* Animations */
   @keyframes fadeSlideUp {
     from { opacity: 0; transform: translateY(12px); }
@@ -264,7 +319,7 @@ V3_CSS = """
 
   /* Landing — single panel (no Streamlit border); lift + glow on hover */
   .hero-card-panel {
-    background: linear-gradient(165deg, rgba(24,24,27,0.96), rgba(12,12,14,0.99));
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
     border: 1px solid rgba(63,63,70,0.5);
     border-radius: 18px;
     padding: 1.75rem 2rem 1.5rem;
@@ -286,12 +341,6 @@ V3_CSS = """
     line-height: 1.1;
   }
 
-  /* Results dashboard — tighter chrome */
-  .results-dedicated .block-container {
-    padding-top: 0.75rem !important;
-    max-width: 1320px !important;
-  }
-
   @keyframes resultsEnter {
     from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
@@ -299,14 +348,17 @@ V3_CSS = """
 
   /* Summaries — documentation layout */
   .segment-doc-block {
-    margin-bottom: 3.5rem;
-    padding-bottom: 2.75rem;
-    border-bottom: 1px solid #27272a;
+    margin-bottom: 2rem;
+    padding: 1.25rem 1.5rem 1.5rem;
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+    border: 1px solid #27272a;
+    border-radius: 14px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.28);
   }
   .segment-doc-block:last-child {
-    border-bottom: none;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
+
   .segment-doc-title {
     font-size: 1.45rem;
     font-weight: 650;
@@ -337,12 +389,12 @@ V3_CSS = """
     margin-top: 1.25rem;
     line-height: 1.6;
   }
+
 </style>
 """
 
 st.markdown(V3_CSS, unsafe_allow_html=True)
 
-MAX_DURATION_SEC = 3600.0
 MAX_UPLOAD_BYTES = 2000 * 1024 * 1024
 
 
@@ -425,26 +477,6 @@ def _init_session_state() -> None:
 def _progress_bar_ascii(pct: int, width: int = 10) -> str:
     return ""  # no longer used
 
-def show_step(step: int, total: int, label: str, pct: int) -> None:
-    base = int((step - 1) / total * 100)
-    span = int(100 / total)
-    overall = min(100, base + int(pct * span / 100))
-    progress_slot.progress(overall / 100.0)
-    status_slot.markdown(
-        f"""
-        <div style="font-family:monospace; font-size:13px; color:#ffffff; margin-top:6px;">
-            <span style="color:#71717a;">Step {step}/{total}</span>
-            &nbsp;·&nbsp;
-            <span>{html.escape(label)}</span>
-            &nbsp;·&nbsp;
-            <span style="color:#71717a;">{pct}%</span>
-        </div>
-        <div style="margin-top:8px; height:3px; border-radius:999px; background:#1e293b; overflow:hidden;">
-            <div style="height:100%; width:{overall}%; background:#ffffff; border-radius:999px; transition:width 0.3s ease;"></div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
 
 def _format_ts(seconds: float) -> str:
     total = int(round(seconds))
@@ -461,18 +493,8 @@ def _clear_edit_session_keys() -> None:
             del st.session_state[k]
 
 
-def _reset_to_landing() -> None:
+def _show_landing_view() -> None:
     st.session_state["analysis_complete"] = False
-    st.session_state["transcripts"] = []
-    st.session_state["scenes"] = []
-    st.session_state["aligned"] = []
-    st.session_state["summaries"] = []
-    st.session_state["selected_segment"] = None
-    st.session_state["video_filename"] = ""
-    st.session_state["video_duration"] = 0.0
-    st.session_state["probe_signature"] = None
-    st.session_state["probe_duration_sec"] = None
-    _clear_edit_session_keys()
     st.rerun()
 
 
@@ -562,25 +584,21 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Defaults for `if run` (both flows assign before use)
+# Defaults for `if run` (landing assigns before use)
 uploaded = None
 probe_dur = None
-over_limit = False
 over_size = False
 whisper_size = "base"
 threshold = 25
 min_gap = 8
 run = False
-progress_slot = None
-status_slot = None
 
 
 def _render_analysis_controls(*, uploader_key: str = "upload_recording") -> tuple:
-    """Upload + sliders + duration checks + Run + progress placeholders. Returns control tuple."""
-    ol = False
+    """Upload + sliders + Run. Returns control tuple."""
     osz = False
     up = st.file_uploader(
-        "Upload recording (MP4, max ~2GB / 60 min)",
+        "Upload recording (MP4, max ~2GB)",
         type=["mp4"],
         key=uploader_key,
     )
@@ -595,31 +613,50 @@ def _render_analysis_controls(*, uploader_key: str = "upload_recording") -> tupl
     if up is not None and not osz and pd is not None:
         mins = int(pd // 60)
         secs = int(pd % 60)
-        if pd > MAX_DURATION_SEC:
-            st.error(f"❌ {mins}m {secs}s — exceeds 60 min limit")
-            ol = True
-        else:
-            st.success(f"✅ {mins}m {secs}s — within limits")
+        st.success(f"✅ {mins}m {secs}s — ready to process")
 
     st.markdown("**Transcription**")
-    ws = st.select_slider(
-        "Whisper model",
-        options=["tiny", "base", "small"],
-        value="base",
+
+    quality_label = st.select_slider(
+        "Transcription Quality",
+        options=["Fast", "Balanced", "High Accuracy (longer wait)"],
+        value="Balanced",
+        help="Higher accuracy may take longer to process.",
     )
-    st.markdown("**Scene detection**")
-    th = st.slider("Sensitivity", 10, 50, 25)
-    mg = st.slider("Min gap (seconds)", 5, 20, 8)
+
+    quality_to_model = {
+        "Fast": "tiny",
+        "Balanced": "base",
+        "High Accuracy": "small",
+    }
+
+    ws = quality_to_model[quality_label]
+
+    st.markdown("**Screen Change Detection**")
+
+    th = st.slider(
+        "Detection Sensitivity",
+        10,
+        50,
+        25,
+        help="Lower = fewer screenshots. Higher = more screenshots.",
+    )
+
+    mg = st.slider(
+        "Minimum Time Between Screenshots (s)",
+        5,
+        20,
+        8,
+        help="Prevents duplicate screenshots from being captured too close together.",
+    )
 
     rn = st.button(
         "▶ Run Analysis",
         type="primary",
         use_container_width=True,
-        disabled=up is None or ol or osz,
+        disabled=up is None or osz,
     )
-    ps = st.empty()
-    ss = st.empty()
-    return up, pd, ol, osz, ws, th, mg, rn, ps, ss
+    return up, pd, osz, ws, th, mg, rn
 
 
 if not _analysis_done:
@@ -629,25 +666,33 @@ if not _analysis_done:
         st.markdown('<div class="hero-fade">', unsafe_allow_html=True)
         st.markdown(
             '<div class="hero-card-panel">'
-            '<h1 class="hero-title-html">Demo Walkthrough Summarizer</h1>'
-            '<p class="hero-subtitle">Turn walkthrough recordings into transcripts, scene '
-            "screenshots, structured summaries, and exportable notes — all processed locally "
-            "on your machine.</p>"
+            '<h1 class="hero-title-html">MP4 Summarizer</h1>'
+            '<p class="hero-subtitle">Generate screenshots from walkthrough recordings and automatically create structured summaries for each workflow segment.</p>'
             "</div>",
             unsafe_allow_html=True,
         )
+        has_prev = len(st.session_state.get("summaries", [])) > 0
+        if has_prev:
+            b1, b2 = st.columns(2)
+            with b1:
+                if st.button("View last results", use_container_width=True):
+                    st.session_state["analysis_complete"] = True
+                    st.session_state["_results_page_enter"] = True
+                    st.rerun()
+            with b2:
+                if st.button("Start new analysis", use_container_width=True):
+                    st.toast(
+                        "Upload a new file below. Last results stay available until a new run finishes."
+                    )
         st.markdown("---")
         (
             uploaded,
             probe_dur,
-            over_limit,
             over_size,
             whisper_size,
             threshold,
             min_gap,
             run,
-            progress_slot,
-            status_slot,
         ) = _render_analysis_controls(uploader_key="hero_upload")
         st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
@@ -659,7 +704,7 @@ else:
     tb_l, tb_r = st.columns([1, 4])
     with tb_l:
         if st.button("← New analysis", key="results_new_analysis"):
-            _reset_to_landing()
+            _show_landing_view()
     with tb_r:
         st.markdown(
             f'<p class="muted-meta" style="margin-top:0.35rem;">'
@@ -678,29 +723,46 @@ def _run_analysis(
     threshold: int,
     min_gap: int,
     ollama_model: str,
-    progress_slot,
-    status_slot,
 ) -> None:
-    if video_duration_sec > MAX_DURATION_SEC:
-        st.error(
-            f"❌ Video is {video_duration_sec / 60:.0f} minutes long. Maximum allowed is 60 minutes. "
-            "Please trim the video and re-upload."
-        )
-        return
-
     _clear_outputs_for_new_run()
 
     with st.status("Running pipeline…", expanded=True) as status:
+        ps = st.empty()
+        ss = st.empty()
+
+        def pipeline_step(step: int, total: int, label: str, pct: int) -> None:
+            base = int((step - 1) / total * 100)
+            span = int(100 / total)
+            overall = min(100, base + int(pct * span / 100))
+            ps.progress(overall / 100.0)
+            ss.markdown(
+                f"""
+                <div class="pipeline-progress-stack" style="width:100%;box-sizing:border-box;">
+                <div style="font-family:monospace;font-size:13px;color:#ffffff;margin-top:4px;width:100%;">
+                    <span style="color:#71717a;">Step {step}/{total}</span>
+                    &nbsp;·&nbsp;
+                    <span>{html.escape(label)}</span>
+                    &nbsp;·&nbsp;
+                    <span style="color:#71717a;">{pct}%</span>
+                </div>
+                <div style="margin-top:10px;height:4px;width:100%;border-radius:999px;background:#1e293b;overflow:hidden;">
+                    <div style="height:100%;width:{overall}%;background:#ffffff;border-radius:999px;transition:width 0.3s ease;"></div>
+                </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
         try:
-            show_step(1, 4, "Extracting audio…", 5)
+            pipeline_step(1, 4, "Extracting audio…", 5)
             wav_fd, wav_path = tempfile.mkstemp(suffix=".wav")
             os.close(wav_fd)
             extract_audio(video_path, wav_path)
-            show_step(1, 4, "Extracting audio…", 100)
+            pipeline_step(1, 4, "Extracting audio…", 100)
 
             def on_transcribe(step: str, pct: int) -> None:
                 status.update(label=f"Transcription: {step}")
-                show_step(2, 4, "Transcribing with Whisper", pct)
+                pipeline_step(2, 4, "Transcribing with Whisper", pct)
 
             segments = transcribe(
                 wav_path, model_size=whisper_size, on_progress=on_transcribe
@@ -712,7 +774,7 @@ def _run_analysis(
 
             def on_scenes(step: str, pct: int) -> None:
                 status.update(label=f"Scenes: {step}")
-                show_step(3, 4, "Detecting scene changes", pct)
+                pipeline_step(3, 4, "Detecting scene changes", pct)
 
             scenes = detect_scenes(
                 video_path,
@@ -726,7 +788,7 @@ def _run_analysis(
 
             def on_summary(step: str, pct: int) -> None:
                 status.update(label=f"Summaries: {step}")
-                show_step(4, 4, "Generating AI summaries", pct)
+                pipeline_step(4, 4, "Generating AI summaries", pct)
 
             summaries = summarize_all(
                 aligned,
@@ -757,8 +819,6 @@ def _run_analysis(
 if run:
     if not uploaded:
         st.error("Please upload an MP4 file first.")
-    elif over_limit:
-        st.error("Video exceeds the 60-minute limit.")
     elif over_size:
         st.error("File exceeds the upload size limit.")
     else:
@@ -771,12 +831,8 @@ if run:
                 st.error("File exceeds ~2GB.")
             else:
                 dur = get_video_duration(tmp_path)
-                if dur > MAX_DURATION_SEC:
-                    st.error(
-                        f"❌ Video is {dur / 60:.0f} minutes long. Maximum allowed is 60 minutes. "
-                        "Please trim the video and re-upload."
-                    )
-                else:
+                _, _run_col, _ = st.columns([1, 2.2, 1])
+                with _run_col:
                     _run_analysis(
                         tmp_path,
                         uploaded.name,
@@ -785,8 +841,6 @@ if run:
                         threshold,
                         min_gap,
                         ollama_model,
-                        progress_slot,
-                        status_slot,
                     )
         finally:
             try:
@@ -808,12 +862,12 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+summaries = st.session_state["summaries"]
+segments = st.session_state["transcripts"]
+
 tab_timeline, tab_transcript, tab_summaries, tab_export = st.tabs(
     ["🗂 Timeline", "📝 Transcript", "🧠 Summaries", "📦 Export"]
 )
-
-summaries = st.session_state["summaries"]
-segments = st.session_state["transcripts"]
 
 with tab_timeline:
     st.subheader("Scene thumbnails")
@@ -835,12 +889,10 @@ with tab_timeline:
                     break
                 sc = scenes[idx]
                 with col:
-                    if Path(sc["path"]).is_file():
-                        st.image(sc["path"], use_container_width=True)
-                    st.caption(sc["label"])
-                    if st.button("Open summary", key=f"tl_btn_{idx}"):
-                        st.session_state["selected_segment"] = idx
-                        st.toast("Open the **Summaries** tab for this segment.")
+                    p = sc.get("path") or ""
+                    if p and Path(str(p)).is_file():
+                        st.image(str(p), use_container_width=True)
+                        st.caption(str(sc.get("label", "")))
         st.markdown("</div>", unsafe_allow_html=True)
 
 with tab_transcript:
@@ -897,8 +949,8 @@ with tab_summaries:
         col_thumb, col_doc = st.columns([1, 2])
         with col_thumb:
             p = s.get("screenshot_path") or ""
-            if p and Path(p).is_file():
-                st.image(p, use_container_width=True)
+            if p and Path(str(p)).is_file():
+                st.image(str(p), use_container_width=True)
         with col_doc:
             sel_note = (
                 '<p class="muted-meta" style="margin:0 0 0.75rem 0;">Selected segment</p>'
